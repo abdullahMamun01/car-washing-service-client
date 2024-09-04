@@ -1,26 +1,45 @@
-import { Link } from 'react-router-dom';
-interface BreadcrumbProps {
-  pageName: string;
-}
-const Breadcrumb = ({ pageName }: BreadcrumbProps) => {
-  return (
-    <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-      <h2 className="text-title-md2 font-semibold text-black dark:text-white">
-        {pageName}
-      </h2>
+import React from "react";
 
-      <nav>
-        <ol className="flex items-center gap-2">
-          <li>
-            <Link className="font-medium" to="/">
-              Dashboard /
-            </Link>
-          </li>
-          <li className="font-medium text-primary">{pageName}</li>
-        </ol>
-      </nav>
-    </div>
+const Breadcrumb3 = () => {
+  return (
+
+      <div className=" mb-20">
+        <div className="w-full mb-8">
+          <div className="px-4 py-4 bg-white  rounded-lg  shadow-1 dark:shadow-card dark:bg-dark-2 dark:border-dark-3 sm:px-6 md:px-8 md:py-5">
+            <ul className="flex items-center">
+              <li className="flex items-center">
+                <a
+                  href="javascript:void(0)"
+                  className="text-base font-medium hover:text-primary dark:hover:text-primary text-dark dark:text-white"
+                >
+                  Home
+                </a>
+                <span className="px-3 text-body-color dark:text-dark-6">
+                  {" "}
+                  /{" "}
+                </span>
+              </li>
+              <li className="flex items-center">
+                <a
+                  href="javascript:void(0)"
+                  className="text-base font-medium text-body-color dark:text-dark-6 dark:hover:text-primary hover:text-primary"
+                >
+                  Project
+                </a>
+                <span className="px-3 text-body-color dark:text-dark-6">
+                  {" "}
+                  /{" "}
+                </span>
+              </li>
+              <li className="text-base font-medium text-body-color dark:text-dark-6">
+                Marketing
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
   );
 };
 
-export default Breadcrumb;
+export default Breadcrumb3;
