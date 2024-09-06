@@ -1,4 +1,3 @@
-
 import {
   Controller,
   FormProvider,
@@ -8,22 +7,48 @@ import {
 import ControlledInput from "./ControlledInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { carWashSchema } from "@/schema/services.schema";
-import { useAddServiceMutation } from "@/redux/api/serviceApi";
+import {
+  useAddServiceMutation,
+  useUpdateServiceMutation,
+} from "@/redux/api/serviceApi";
 import { TCarWashService } from "@/redux/types/service.type";
 import { catchError } from "@/utils/catchError";
 import SubmitButton from "./SubmitButton";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import {
+  resetUpdateService,
+  useUpdateService,
+} from "@/redux/features/service/serviceSlice";
+import { closeModal } from "@/redux/features/modal/modalSlice";
 
 export default function ServiceManageForm() {
-  const [addService, { isLoading }] = useAddServiceMutation();
+  const selectedUpdateService = useAppSelector(useUpdateService);
+  const dispatch = useAppDispatch();
+  const [addService, { isLoading: isAddingService }] = useAddServiceMutation();
+  const [updateService, { isLoading: isUpdatingService }] =
+    useUpdateServiceMutation();
 
   const form = useForm<TCarWashService>({
+    defaultValues: {
+      name: selectedUpdateService?.name || "",
+      description: selectedUpdateService?.description || "",
+      price: selectedUpdateService?.price,
+      duration: selectedUpdateService?.duration,
+    },
     resolver: zodResolver(carWashSchema),
   });
 
   const onSubmit: SubmitHandler<TCarWashService> = async (formData) => {
     try {
-      await addService(formData).unwrap();
-      form.reset()
+      if (updateService) {
+        await updateService({ ...formData, id: selectedUpdateService!.id });
+      } else {
+        await addService(formData).unwrap();
+      }
+      dispatch(closeModal("update-service"));
+      dispatch(resetUpdateService());
+
+      form.reset();
     } catch (error) {
       catchError(error as Error);
     }
@@ -36,35 +61,25 @@ export default function ServiceManageForm() {
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <div className="py-6 ">
-          <div className="w-full md:w-9/12">
-            <div className="flex flex-wrap -m-3">
-              <div className="w-full md:w-1/3 p-3">
-                <p className="block text-sm font-semibold uppercase mb-4 text-primary">
-                  Service Name
-                </p>
-              </div>
-
-              <div className="w-full md:w-2/3 p-3">
-                <ControlledInput
-                  className="w-full py-3 px-4 text-sm text-gray-900 placeholder-gray-400 border border-gray-200 focus:border-purple-500 focus:outline-purple rounded-lg"
-                  inputType="text"
-                  name="name"
-                  placeholder="Service name"
-                />
-              </div>
-            </div>
-          </div>
+          <ControlledInput
+            className="w-full py-3 px-4 text-sm text-gray-900 placeholder-gray-400 border border-gray-200 focus:border-purple-500 focus:outline-purple rounded-lg"
+            inputType="text"
+            name="name"
+            label="Service Name"
+            placeholder="Service name"
+          />
         </div>
 
         <div className="py-6 ">
-          <div className="w-full md:w-9/12">
+          <div className="w-full ">
             <div className="flex flex-wrap -m-3">
-              <div className="w-full md:w-1/3 p-3">
-                <p className="block text-sm font-semibold uppercase mb-4 text-primary">
-                  Duration And Price
-                </p>
-              </div>
               <div className="w-full md:w-1/3 md:flex-1 p-3">
+                <label
+                  htmlFor="duration"
+                  className="block text-sm font-semibold uppercase mb-4 text-primary"
+                >
+                  Duration
+                </label>
                 <Controller
                   name="duration"
                   control={form.control}
@@ -95,6 +110,7 @@ export default function ServiceManageForm() {
               </div>
               <div className="w-full md:w-1/3 md:flex-1 p-3">
                 <ControlledInput
+                  label="price"
                   className="w-full py-3 px-4 text-sm text-gray-900 placeholder-gray-400 border border-gray-200 focus:border-purple-500 focus:outline-purple rounded-lg"
                   inputType="number"
                   placeholder="service price"
@@ -106,43 +122,39 @@ export default function ServiceManageForm() {
         </div>
 
         <div className="pt-6">
-          <div className="w-full md:w-9/12">
-            <div className="flex flex-wrap -m-3">
-              <div className="w-full md:w-1/3 p-3">
-                <p className="block text-sm font-semibold uppercase mb-4 text-primary">
-                  Service Description
-                </p>
-              </div>
-              <div className="w-full md:flex-1 p-3">
-                <Controller
-                  name="description"
-                  control={form.control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <textarea
-                      {...field}
-                      placeholder="service description..."
-                      rows={8}
-                      className="w-full py-3 px-4 text-sm text-gray-900 placeholder-gray-400 border border-gray-200 focus:border-purple-500 focus:outline-purple rounded-lg"
-                    ></textarea>
-                  )}
-                />
-                {form.formState.errors.description && (
-                  <p className="text-red-600 pt-2">
-                    {form.formState?.errors?.description?.message as string}
-                  </p>
-                )}
-              </div>
-            </div>
+          <div className="w-full ">
+            <Controller
+              name="description"
+              control={form.control}
+              defaultValue=""
+              render={({ field }) => (
+                <textarea
+                  {...field}
+                  placeholder="service description..."
+                  rows={8}
+                  className="w-full py-3 px-4 text-sm text-gray-900 placeholder-gray-400 border border-gray-200 focus:border-purple-500 focus:outline-purple rounded-lg"
+                ></textarea>
+              )}
+            />
+            {form.formState.errors.description && (
+              <p className="text-red-600 pt-2">
+                {form.formState?.errors?.description?.message as string}
+              </p>
+            )}
           </div>
         </div>
-        <div className="pt-6 w-2/4 mx-auto flex justify-center">
+        <div className="pt-6 w-full mx-auto flex justify-center">
           <SubmitButton
-            isLoading={isLoading}
-
+            isLoading={
+              selectedUpdateService ? isUpdatingService : isAddingService
+            }
             className="inline-flex w-full py-3 px-9 mb-6 text-base text-white font-semibold bg-primary hover:bg-orange-900 focus:ring-2 focus:ring-orange-900 focus:ring-opacity-50 rounded-full shadow-4xl focus:outline-none transition duration-200"
           >
-            {isLoading ? "submiting..." : "Add service"}
+            {(selectedUpdateService ? isUpdatingService : isAddingService)
+              ? "submiting..."
+              : selectedUpdateService
+              ? "Update Service"
+              : "Add Service"}
           </SubmitButton>
         </div>
       </form>

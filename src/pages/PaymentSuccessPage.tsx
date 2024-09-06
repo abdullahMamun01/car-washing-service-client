@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { Loader2, CheckCircle, ArrowRight } from "lucide-react";
 import {
@@ -9,46 +9,41 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useProcessPaymentAndBookingMutation } from "@/redux/api/paymentApi";
+import { catchError } from "@/utils/catchError";
 
 export default function PaymentSuccessWaitingPage() {
+  const [params] = useSearchParams();
   const navigate = useNavigate();
-  const [progress, setProgress] = useState(0);
-  const [isBookingConfirmed, setIsBookingConfirmed] = useState(false);
+
+  const [confirmAppoinment, { isLoading, status }] =
+    useProcessPaymentAndBookingMutation();
 
   useEffect(() => {
     let isMounted = true;
+    const sessionId = params.get("session_id") as string;
 
-    const checkBookingStatus = async () => {
+    const processPaymentAndBooking = async (sessionId: string) => {
+      isMounted = false;
       try {
-        // Simulating API call - replace with actual API call in production
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        const fakeProgress = Math.min(progress + Math.random() * 30, 100);
-
-        if (isMounted) {
-          if (fakeProgress === 100) {
-            setProgress(100);
-            setIsBookingConfirmed(true);
-          } else {
-            setProgress(fakeProgress);
-            setTimeout(checkBookingStatus, 2000); // Check again in 2 seconds
-          }
-        }
+        await confirmAppoinment({
+          session_id: sessionId,
+        }).unwrap();
       } catch (error) {
-        console.error("Error checking booking status:", error);
-        // Handle error - maybe redirect to an error page
+        catchError(error as Error);
       }
     };
-
-    if (!isBookingConfirmed) {
-      checkBookingStatus();
+    console.log(sessionId);
+    if (sessionId && isMounted) {
+      processPaymentAndBooking(sessionId);
     }
 
     return () => {
       isMounted = false;
     };
-  }, [progress, isBookingConfirmed]);
-
+  }, []);
+  console.log(status);
   return (
     <div className="container mx-auto md:p-4 px-1 min-h-screen flex items-center justify-center bg-gray-50">
       <Card className="w-full max-w-[800px] py-5">
@@ -57,12 +52,12 @@ export default function PaymentSuccessWaitingPage() {
             <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
           </div>
           <CardTitle className="text-2xl font-bold text-green-700">
-            {isBookingConfirmed ? "Booking Confirmed!" : "Payment Successful!"}
+            {isLoading ? "Booking Confirmed!" : "Payment Successful!"}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div>
-            {!isBookingConfirmed ? (
+            {isLoading ? (
               <div>
                 <p className="text-center text-gray-600 mb-6">
                   We're confirming your booking. This will only take a moment.
@@ -80,7 +75,7 @@ export default function PaymentSuccessWaitingPage() {
                 <p className="text-center text-gray-600 mb-6">
                   Your car wash appointment has been successfully booked!
                 </p>
-                <div className="bg-blue-50 p-4 rounded-lg">
+                {/* <div className="bg-blue-50 p-4 rounded-lg">
                   <h3 className="font-semibold text-blue-700 mb-2">
                     Booking Details
                   </h3>
@@ -90,13 +85,13 @@ export default function PaymentSuccessWaitingPage() {
                   <p className="text-sm text-gray-600">
                     Location: 123 Main St, Anytown, USA
                   </p>
-                </div>
+                </div> */}
               </div>
             )}
           </div>
         </CardContent>
         <CardFooter className="flex justify-center">
-          {isBookingConfirmed ? (
+          {!isLoading ? (
             <Button
               onClick={() => navigate("/dashboard")}
               className="bg-blue-600 hover:bg-blue-700 text-white"

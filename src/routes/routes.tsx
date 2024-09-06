@@ -6,11 +6,16 @@ import RootLayout from "@/layout/RootLayout";
 import LoginPage from "@/pages/auth/LoginPage";
 import RegistrationPage from "@/pages/auth/RegistrationPage";
 import ServicePage from "@/pages/services/ServicePage";
-import ServiceManagement from "@/pages/dashboard/services/ServiceManagement";
+
 import ServiceDetailsPage from "@/pages/services/ServiceDetailsPage";
 import BookingPage from "@/pages/booking/BookingPage";
-import SingleService from "@/components/services/test/SingleService";
 import PaymentSuccessWaitingPage from "@/pages/PaymentSuccessPage";
+
+import { ServiceManagement } from "@/components/dashboard/services/ServiceManagement";
+
+import { BookingsOverview } from "@/components/dashboard/bookings/BookingsOverview";
+import UserManagement from "@/pages/dashboard/users/UserManagement";
+import SlotManagement from "@/components/dashboard/slot/SlotManagement";
 
 const router = createBrowserRouter([
   {
@@ -63,14 +68,26 @@ const router = createBrowserRouter([
 
   {
     path: "/dashboard",
-
     element: <DefaultLayout />,
     children: [
       {
-        path: "services",
-
+        path: "services/manage-services",
         element: <ServiceManagement />,
       },
+      {
+        path: "services/manage-slots",
+        element: <SlotManagement />,
+      },
+      {
+        path: "user/manage-user",
+        element: <UserManagement />,
+      },
+      {
+        path: "bookings/recent",
+        element: <BookingsOverview />,
+      },
+
+      
     ],
   },
 ]);

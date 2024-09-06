@@ -1,5 +1,4 @@
-
-import { Button } from "@/components/ui/button";
+import SubmitButton from "@/components/form/SubmitButton";
 import {
   Card,
   CardContent,
@@ -9,22 +8,43 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { useStripePaymentMutation } from "@/redux/api/paymentApi";
+
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useSelectedSerivce } from "@/redux/features/service/serviceSlice";
 import { useAppSelector } from "@/redux/hooks";
+import { StripeCheckoutRequest } from "@/redux/types/payment.type";
+import { catchError } from "@/utils/catchError";
 import { CarIcon, ClockIcon, MailIcon, User } from "lucide-react";
 
 export default function BookingPage() {
   const selectedService = useAppSelector(useSelectedSerivce);
   const user = useAppSelector(selectCurrentUser);
-  // const form = useForm({
-  //   defaultValues: {
-  //     name: user?.name,
-  //     email: user?.email,
-  //     time: "09:00",
-  //   },
-  // });
-  const onSubmit = (formData) => {};
+  const [stripePayement, { isLoading }] = useStripePaymentMutation();
+
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      const data: StripeCheckoutRequest = {
+        name: selectedService!.serviceName,
+        description: selectedService!.serviceName,
+        serviceId: selectedService!.serviceId,
+        price: selectedService!.price,
+        slotId: selectedService!.slotId,
+        vehicleType: selectedService!.vehicleType,
+        vehicleBrand: selectedService!.vehicleBrand,
+        manufacturingYear: selectedService!.manufacturingYear,
+        vehicleModel: selectedService!.vehicleModel,
+        registrationPlate: selectedService!.registrationPlate,
+      };
+      console.log(data)
+      const response = await stripePayement(data).unwrap();
+      window.location.href = response.sessionUrl;
+      console.log(response)
+    } catch (error) {
+      catchError(error as Error);
+    }
+  };
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/10 to-secondary/10 p-4 md:p-8 flex items-center justify-center">
       <Card className="w-full max-w-6xl shadow-lg">
@@ -132,9 +152,11 @@ export default function BookingPage() {
                   />
                 </div>
               </div>
-              <Button type="submit" className="w-full mt-6">
-                Confirm and Pay ${selectedService?.price.toFixed(2)}
-              </Button>
+              <SubmitButton isLoading={isLoading} className="w-full mt-6">
+                {isLoading
+                  ? "payment processing..."
+                  : `Confirm and Pay ${selectedService?.price.toFixed(2)}`}
+              </SubmitButton>
             </form>
           </div>
         </CardContent>

@@ -7,6 +7,7 @@ export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://car-washing-service-backend.vercel.app/api",
+  
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;
 
@@ -17,6 +18,7 @@ export const baseApi = createApi({
       return headers;
     },
   }),
-
+  
+  tagTypes : ["Service"] ,
   endpoints: () => ({}),
 });

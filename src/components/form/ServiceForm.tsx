@@ -30,7 +30,7 @@ export default function ServiceForm({ serviceName, price }: TServiceFormProps) {
   const { handleSubmit, watch } = form;
   const [searchParams] = useSearchParams();
   const { serviceId } = useParams();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<TVehicleServiceRequest> = (formData) => {
     const serviceData: ServicePayload = {
@@ -42,9 +42,8 @@ export default function ServiceForm({ serviceName, price }: TServiceFormProps) {
       slotTime: formData.slotTime as string,
     };
     dispatch(selectService(serviceData));
-    navigate('/booking')
+    navigate("/booking");
   };
-
 
   const [params] = useSearchParams();
   const watchDate = params.get("date");
