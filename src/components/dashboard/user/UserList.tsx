@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -14,20 +13,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-const users = [
-  { id: 1, name: "John Doe", email: "john@example.com", role: "Customer" },
-  { id: 2, name: "Jane Smith", email: "jane@example.com", role: "Admin" },
-  { id: 3, name: "Bob Johnson", email: "bob@example.com", role: "Staff" },
-];
+import { useUpdateRoleMutation, useUserListQuery } from "@/redux/api/userApi";
+import { User, ShieldCheck } from "lucide-react";
+import { catchError } from "@/utils/catchError";
+import toast from "react-hot-toast";
+
 
 export default function UserList() {
-  const [userRoles, setUserRoles] = useState(users.map((user) => user.role));
+  // const [userRoles, setUserRoles] = useState(users.map((user) => user.role));
+  const [updateRole, { isLoading: isUpdatingRole }] = useUpdateRoleMutation();
+  const { data: users, isLoading } = useUserListQuery(undefined);
+  console.log(users);
+  if (isLoading) {
+    return <div>Loading..</div>;
+  }
 
   const getRoleColor = (role: string) => {
     switch (role.toLowerCase()) {
       case "admin":
-        return "bg-purple-100 text-purple-800";
-      case "staff":
         return "bg-blue-100 text-blue-800";
       case "customer":
         return "bg-green-100 text-green-800";
@@ -36,11 +39,15 @@ export default function UserList() {
     }
   };
 
-  const handleRoleChange = (index: number, newRole: string) => {
-    const updatedRoles = [...userRoles];
-    updatedRoles[index] = newRole;
-    setUserRoles(updatedRoles);
+  const handleRoleChange = async (newRole: string, userId: string) => {
+    try {
+      await updateRole({ role: newRole, userId }).unwrap();
+      toast.success(`user role update to ${newRole} successfully` , {position:'bottom-right'})
+    } catch (error) {
+      catchError(error as Error);
+    }
   };
+
   return (
     <Table>
       <TableHeader>
@@ -52,28 +59,46 @@ export default function UserList() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {users.map((user, index) => (
+        {users?.map((user) => (
           <TableRow
-            key={user.id}
+            key={user._id}
             className="hover:bg-gray-50 transition-colors"
           >
-            <TableCell>{user.id}</TableCell>
+            <TableCell>{user._id}</TableCell>
             <TableCell>{user.name}</TableCell>
             <TableCell>{user.email}</TableCell>
+
             <TableCell>
               <Select
-                value={userRoles[index]}
-                onValueChange={(value) => handleRoleChange(index, value)}
+                defaultValue={user.role}
+                onValueChange={(value) =>
+                  handleRoleChange(value, user._id as string)
+                }
               >
                 <SelectTrigger
-                  className={`w-[180px] ${getRoleColor(userRoles[index])}`}
+                  className={`w-[180px]`}
+                  disabled={isUpdatingRole}
                 >
                   <SelectValue placeholder="Select a role" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Customer">Customer</SelectItem>
-                  <SelectItem value="Staff">Staff</SelectItem>
-                  <SelectItem value="Admin">Admin</SelectItem>
+                  <SelectItem
+                    className={`${user.role === "user" && "bg-blue-100"}`}
+                    value="user"
+                  >
+                    <div className="flex">
+                      <User className="mr-1 w-5 h-5 text-primary" /> Customer
+                    </div>
+                  </SelectItem>
+                  <SelectItem
+                    value="admin"
+                    className={`${user.role === "admin" && "bg-blue-100"}`}
+                  >
+                    <div className="flex">
+                      <ShieldCheck className="mr-1 w-5 h-5 text-primary" />{" "}
+                      Admin
+                    </div>
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </TableCell>

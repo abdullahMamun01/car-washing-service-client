@@ -16,6 +16,8 @@ import { ServiceManagement } from "@/components/dashboard/services/ServiceManage
 import { BookingsOverview } from "@/components/dashboard/bookings/BookingsOverview";
 import UserManagement from "@/pages/dashboard/users/UserManagement";
 import SlotManagement from "@/components/dashboard/slot/SlotManagement";
+import UserBookings from "@/components/dashboard/user/UserBooking";
+import Profile from "@/components/dashboard/user/Profile";
 
 const router = createBrowserRouter([
   {
@@ -83,8 +85,16 @@ const router = createBrowserRouter([
         element: <UserManagement />,
       },
       {
-        path: "bookings/recent",
+        path: "recent-bookings",
         element: <BookingsOverview />,
+      },
+      {
+        path: "bookings",
+        element: <UserBookings />,
+      },
+      {
+        path: "profile",
+        element: <Profile />,
       },
 
       

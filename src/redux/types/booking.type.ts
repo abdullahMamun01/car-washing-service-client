@@ -37,3 +37,5 @@ export type TBookingResponse = {
   createdAt: string;
   updatedAt: string;
 };
+
+

@@ -13,6 +13,7 @@ import {
   ArrowLeft,
   BookIcon,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 type MenuItem = {
   name: string;
@@ -50,24 +51,25 @@ const menuItems: MenuItem[] = [
   },
 
   { name: "Calendar", icon: <Calendar size={20} />, href: "/calendar" },
+
+  {
+    name: "Recent Bookings",
+    icon: <BookIcon size={20} />,
+    href: "/dashboard/recent-bookings",
+  },
   {
     name: "Bookings",
     icon: <BookIcon size={20} />,
     href: "/dashboard/bookings",
   },
-  { name: "Profile", icon: <User size={20} />, href: "/profile" },
-  {
-    name: "Forms",
-    icon: <FileText size={20} />,
-    href: "/forms",
-    children: [
-      { name: "Create Form", href: "/forms/create" },
-      { name: "Form List", href: "/forms/list" },
-    ],
-  },
+
+  { name: "Profile", icon: <User size={20} />, href: "/dashboard/profile" },
+
   { name: "Tables", icon: <Table size={20} />, href: "/tables" },
   { name: "Settings", icon: <Settings size={20} />, href: "/settings" },
 ];
+
+
 
 const otherItems: MenuItem[] = [
   { name: "Chart", icon: <PieChart size={20} />, href: "/chart" },
@@ -118,7 +120,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
       >
         <span className="flex items-center">
           {item.icon}
-          <span className="ml-3 ">{item.name}</span>
+          {item.children ? <span className="ml-3 ">{item.name}</span> : <Link className="ml-3" to={item.href}>{item.name}</Link>}
         </span>
         {item.children && (
           <ChevronDown
@@ -133,12 +135,12 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
         <ul className="mt-1 ml-6 space-y-1 text-slate-400 ">
           {item.children.map((child) => (
             <li key={child.name}>
-              <a
-                href={child.href}
+              <Link
+                to={child.href}
                 className="block p-2 rounded hover:bg-gray-700"
               >
                 {child.name}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

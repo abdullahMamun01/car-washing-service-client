@@ -1,6 +1,14 @@
 import { TResponse } from ".";
 import { TCarWashServiceDataResponse } from "./service.type";
 
+
+export type TCreateSlot = {
+  service: string
+  date: string
+  startTime: string
+  endTime: string
+}
+
 export type TSlot = {
   _id: string;
   service: TCarWashServiceDataResponse;
@@ -11,7 +19,5 @@ export type TSlot = {
   createdAt: string;
   updatedAt: string;
 };
-
-export type TSlotResponse = TResponse<TSlot[]>
-
-
+export type TSlotStatus = "avaialbe" | "unavailable";
+export type TSlotResponse = TResponse<TSlot[]>;

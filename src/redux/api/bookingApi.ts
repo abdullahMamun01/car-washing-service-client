@@ -14,7 +14,17 @@ const bookingApi = baseApi.injectEndpoints({
       transformResponse: (response: TResponse<TBookingResponse[]>) =>
         response.data,
     }),
+    myBooking: build.query<TBookingResponse[], void>({
+      query: () => {
+        return {
+          url: "/my-bookings",
+          method: "GET",
+        };
+      },
+      transformResponse: (response: TResponse<TBookingResponse[]>) =>
+        response.data,
+    }),
   }),
 });
 
-export const { useGetAllBookingQuery } = bookingApi;
+export const { useGetAllBookingQuery ,useMyBookingQuery} = bookingApi;

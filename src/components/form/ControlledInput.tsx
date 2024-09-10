@@ -1,6 +1,7 @@
 import React, { memo } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { cn } from "@/lib/utils"; // Assuming clx and cn are imported from a utility file
+import { Input } from "../ui/input";
 
 type InputType =
   | "text"
@@ -89,7 +90,7 @@ const ControlledInput: React.FC<ControlledInputProps> = memo(
               case "checkbox":
                 return <input type="checkbox" {...inputProps} />;
               default:
-                return <input type={inputType} {...inputProps} />;
+                return <Input type={inputType} {...inputProps} />;
             }
           }}
         />
