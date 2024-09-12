@@ -3,10 +3,11 @@ import { Button } from "./ui/button";
 import { DropletIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const HeroImage =
-  "http://aqualine.like-themes.com/wp-content/uploads/2018/02/washer.png";
+
 
 export default function HeroSection() {
+  const HeroImage =
+  "https://res.cloudinary.com/db5a7lbio/image/upload/v1726162448/car-washing/assets/car-wash-hero_vph4ga.webp";
   return (
     <section className="bg-gradient-to-b from-blue-50 to-white overflow-hidden grid md:grid-cols-12 min-h-screen ">
       <div className="px-4 mx-auto col-span-6 flex items-center justify-center">
