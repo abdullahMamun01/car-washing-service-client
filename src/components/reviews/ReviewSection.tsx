@@ -64,7 +64,7 @@ const ReviewSection = () => {
 
         <textarea
           className="w-full p-4 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
-          rows="4"
+          rows={4}
           placeholder="Write your feedback here..."
           value={feedback}
           onChange={(e) => setFeedback(e.target.value)}
