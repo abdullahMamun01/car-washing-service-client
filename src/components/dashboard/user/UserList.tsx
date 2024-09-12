@@ -23,7 +23,7 @@ export default function UserList() {
   // const [userRoles, setUserRoles] = useState(users.map((user) => user.role));
   const [updateRole, { isLoading: isUpdatingRole }] = useUpdateRoleMutation();
   const { data: users, isLoading } = useUserListQuery(undefined);
-  console.log(users);
+ 
   if (isLoading) {
     return <div>Loading..</div>;
   }

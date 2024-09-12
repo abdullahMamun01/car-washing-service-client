@@ -9,10 +9,14 @@ import { TResponse } from "../types";
 
 const serviceApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getAllServices: build.query<TCarWashServiceDataResponse[], undefined>({
-      query: () => {
+    getAllServices: build.query<
+      TCarWashServiceDataResponse[],
+      undefined | string
+    >({
+      query: (query) => {
+        const url = query ? `/services${query}` : `/services`;
         return {
-          url: "/services",
+          url,
           method: "GET",
         };
       },
@@ -73,5 +77,5 @@ export const {
   useGetAllServicesQuery,
   useGetSingleServiceQuery,
   useUpdateServiceMutation,
-  useDeleteServiceMutation
+  useDeleteServiceMutation,
 } = serviceApi;

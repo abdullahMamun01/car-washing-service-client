@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card";
 import { ChangeEvent, useState } from "react";
 import { Upload } from "lucide-react";
+import UpdateProfileForm from "@/components/form/UpdateProfileForm";
 
 interface User {
   name: string;
@@ -53,59 +54,7 @@ export default function Profile() {
           <CardDescription>Manage your account details here.</CardDescription>
         </CardHeader>
         <CardContent>
-          <form className="space-y-4">
-            <div className="flex items-center space-x-4">
-              <Avatar className="w-20 h-20">
-                <AvatarImage src={userData.avatar} alt={userData.name} />
-                <AvatarFallback>{userData.name.charAt(0)}</AvatarFallback>
-              </Avatar>
-              <div>
-                <Label htmlFor="avatar" className="cursor-pointer">
-                  <div className="flex items-center space-x-2 text-sm text-blue-600 hover:text-blue-700">
-                    <Upload className="w-4 h-4" />
-                    <span>Upload new picture</span>
-                  </div>
-                </Label>
-                <Input
-                  id="avatar"
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handleAvatarChange}
-                />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
-              <Input
-                id="name"
-                name="name"
-                value={userData.name}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                value={userData.email}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="phone">Phone</Label>
-              <Input
-                id="phone"
-                name="phone"
-                type="tel"
-                value={userData.phone}
-                onChange={handleInputChange}
-              />
-            </div>
-            <Button type="submit">Update Profile</Button>
-          </form>
+          <UpdateProfileForm/>
         </CardContent>
       </Card>
     );

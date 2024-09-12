@@ -121,7 +121,7 @@ const ReviewSection = () => {
             )}
 
             <button
-              className="mt-4 text-blue-500 hover:underline"
+              className="mt-4 text-sky-500 hover:underline"
               onClick={() => navigate('/reviews')}
             >
               See All Reviews

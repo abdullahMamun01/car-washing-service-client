@@ -1,9 +1,10 @@
 import React from "react";
 import FeedBack from "./FeedBack";
-import FeedBackIcon from '@/assets/icons/feedback.png'
+
+import { ThumbsUp } from "lucide-react";
 export default function CustomerFeedBack() {
   return (
-    <section className="bg-gray-50 ">
+    <section className="bg-gradient-to-b from-blue-50 to-white">
       <div className="mx-auto max-w-screen-2xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16 container">
         <div className="md:flex md:items-end md:justify-between">
           <div className="max-w-xl">
@@ -21,7 +22,7 @@ export default function CustomerFeedBack() {
 
           <a
             href="#"
-            className="mt-6 inline-flex shrink-0 items-center gap-2 rounded-full border border-primary px-5 py-3 text-primary transition hover:bg-primary hover:text-white md:mt-0"
+            className="mt-6 inline-flex shrink-0 items-center gap-2 rounded-full border border-sky-500 px-5 py-3 text-sky-500 transition hover:bg-primary hover:text-white md:mt-0"
           >
             <span className="font-medium"> Read all reviews </span>
 
@@ -47,10 +48,9 @@ export default function CustomerFeedBack() {
           <FeedBack />
         </div>
         <div className="flex justify-center mt-10">
-          <button className="inline-flex justify-center items-center gap-2 rounded border border-primary bg-primary px-8 py-3 text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
-            <img className="w-7 h-6 object-contain mr-2" src={FeedBackIcon} alt="" />
+          <button className="inline-flex  justify-center items-center gap-2 rounded  bg-sky-500 px-8 py-3 text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+            <ThumbsUp className=" text-white" />
             <span className="text-sm font-medium"> Feedback </span>
-
           </button>
         </div>
       </div>

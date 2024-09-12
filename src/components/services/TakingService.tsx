@@ -53,7 +53,7 @@ export default function TakingService() {
               <button className="rounded-lg bg-blue-100 px-4 py-2 font-medium text-blue-900 active:scale-95">
                 14:00
               </button>
-              <button className="rounded-lg bg-blue-700 px-4 py-2 font-medium text-white active:scale-95">
+              <button className="rounded-lg bg-sky-500 px-4 py-2 font-medium text-white active:scale-95">
                 09:00
               </button>
               <button className="rounded-lg bg-blue-100 px-4 py-2 font-medium text-blue-900 active:scale-95">

@@ -40,7 +40,7 @@ export default function BookingPage() {
       console.log(data)
       const response = await stripePayement(data).unwrap();
       window.location.href = response.sessionUrl;
-      console.log(response)
+      
     } catch (error) {
       catchError(error as Error);
     }

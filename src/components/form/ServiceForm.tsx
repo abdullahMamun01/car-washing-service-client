@@ -93,7 +93,7 @@ export default function ServiceForm({ serviceName, price }: TServiceFormProps) {
               name="registrationPlate"
               id="registrationPlate"
               placeholder="enter your registration Plate"
-              label="registration Plate"
+              label="registration Plate ( Example : ABCD1235)"
             />
           </div>
         </div>
@@ -102,13 +102,13 @@ export default function ServiceForm({ serviceName, price }: TServiceFormProps) {
           <TabsList className="grid w-full grid-cols-2 bg-blue-100">
             <TabsTrigger
               value="date"
-              className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+              className="data-[state=active]:bg-sky-600 data-[state=active]:text-white"
             >
               Select Date
             </TabsTrigger>
             <TabsTrigger
               value="time"
-              className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+              className="data-[state=active]:bg-sky-600 data-[state=active]:text-white"
             >
               Select Time
             </TabsTrigger>
@@ -135,7 +135,7 @@ export default function ServiceForm({ serviceName, price }: TServiceFormProps) {
             </div>
             <Button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+              className="w-full bg-sky-600 hover:bg-sky-500 text-white"
             >
               Book This Service
             </Button>

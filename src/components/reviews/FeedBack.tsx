@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function FeedBack() {
     return (
-        <blockquote className="flex h-full flex-col justify-between bg-white p-6 shadow-sm sm:p-8">
+        <blockquote className="flex h-full flex-col justify-between bg-white p-6 shadow-sm sm:p-8 w-full">
             <div>
                 <div className="flex gap-0.5 text-green-500">
                     <svg

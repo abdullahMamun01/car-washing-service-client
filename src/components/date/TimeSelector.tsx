@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { useAvailableSlotListQuery } from "@/redux/api/slotApi";
 import { useFormContext, Controller } from "react-hook-form";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { Button } from "../ui/button";
 
 const TimeSelector: React.FC = () => {
@@ -26,8 +26,10 @@ const TimeSelector: React.FC = () => {
     setValue("slotTime", slot.time);
   };
   const location = useLocation();
+  const {serviceId} = useParams()
   const date = location.search || new Date().toDateString();
-  const { data, isLoading, isFetching } = useAvailableSlotListQuery(date);
+
+  const { data, isLoading, isFetching } = useAvailableSlotListQuery(`${date}&serviceId=${serviceId}`);
 
   if (isLoading || isFetching) {
     return <div>Loading...</div>;
@@ -38,7 +40,7 @@ const TimeSelector: React.FC = () => {
     slotDate: slot.date,
     booked: slot.isBooked === 'booked'
   }));
-  
+
   return (
     <div className="mb-4">
       <h2 className="text-xl font-bold mb-4">Select a time</h2>
@@ -56,37 +58,25 @@ const TimeSelector: React.FC = () => {
                   type="button"
                   variant={watchTime === slot.slotId ? "default" : "outline"}
                   onClick={() => handleSlotSelect(slot)}
-                  disabled={slot.booked}
+                  disabled={slot.booked} 
 
                   className={cn(
                     "w-full",
                     watchTime === slot.slotId
-                      ? "bg-blue-600 hover:bg-blue-700"
-                      : "hover:border-blue-600 hover:text-blue-600"
+                      ? "bg-sky-600 hover:bg-sky-500"
+                      : "hover:border-skys-600 hover:text-blue-600"
                   )}
                 >
-                  {slot.time}
+                  {slot.time} 
                 </Button>
-                // <button
-                //   {...field}
-                //   key={slot.slotId}
-                //   type="button"
-                //   className={`rounded-lg className="rounded-lg bg-blue-100 px-4 py-2 font-medium " ${
-                //     selectedTime === slot.time
-                //       ? "bg-blue-500 text-white"
-                //       : "bg-blue-100 text-blue-700"
-                //   }`}
-                //   onClick={() => handleTimeClick(slot)}
-                // >
-                //   {slot.time}
-                // </button>
+     
               ))}
             </div>
           )}
         />
       ) : (
         <div>
-          <h1 className="text-xl text-blue-500">
+          <h1 className="text-xl text-sky-500">
             Sorry, no available slots for this date. Please check other dates
             for availability.
           </h1>

@@ -84,7 +84,7 @@ export default function SlotList() {
               <TableCell>{slot.date}</TableCell>
               <TableCell>{slot.startTime}</TableCell>
               <TableCell>{slot.endTime}</TableCell>
-              <TableCell>{slot.service.name}</TableCell>
+              <TableCell>{slot?.service?.name}</TableCell>
               <TableCell>
                 <span
                   className={`px-2 py-1 rounded-full text-xs font-semibold ${getStatusColor(

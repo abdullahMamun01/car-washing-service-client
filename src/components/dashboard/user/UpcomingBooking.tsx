@@ -86,7 +86,7 @@ export default function UpcomingBooking() {
                 <div className="text-sm">
                   Time until appointment:
                   {booking.isRunning && (
-                    <span className="text-blue-500 ml-3">
+                    <span className="text-sky-500 ml-3">
                       Your Appoint is Running!
                     </span>
                   )}

@@ -58,7 +58,7 @@ export default function CountDownTimer({ date, startTime }: TCountDownDate) {
   return (
     <div className="flex items-center space-x-2 text-sm text-gray-500 mb-2">
       <Clock className="w-4 h-4 ml-2 mt-2" />
-      <h1 className="text-blue-500 font-bold mt-2">
+      <h1 className="text-sky-500 font-bold mt-2">
         {duration.days} days {duration.hours}h {duration.minute}m{" "}
         {duration.seconds}s
       </h1>

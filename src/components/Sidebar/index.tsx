@@ -3,7 +3,6 @@ import {
   LayoutDashboard,
   Calendar,
   User,
-  FileText,
   Table,
   Settings,
   PieChart,
@@ -14,9 +13,12 @@ import {
   BookIcon,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "@/redux/hooks";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 
 type MenuItem = {
   name: string;
+  role?: "admin" | "user" | "public";
   icon?: React.ReactNode;
   href: string;
   children?: MenuItem[];
@@ -27,6 +29,7 @@ const menuItems: MenuItem[] = [
     name: "Dashboard",
     icon: <LayoutDashboard size={20} />,
     href: "/dashboard",
+    role: "public",
     children: [
       { name: "Analytics", href: "/dashboard/analytics" },
       { name: "Overview", href: "/dashboard/overview" },
@@ -34,20 +37,23 @@ const menuItems: MenuItem[] = [
   },
   {
     name: "services",
+    role: "admin",
     icon: <LayoutDashboard size={20} />,
     href: "/dashboard/services/manage-services",
     children: [
-      { name: "manage-service", href: "/dashboard/services/manage-services" },
-      { name: "manage-slots", href: "/dashboard/services/manage-slots" },
+      {
+        name: "manage-service",
+        href: "/dashboard/admin/services/manage-services",
+      },
+      { name: "manage-slots", href: "/dashboard/admin/services/manage-slots" },
     ],
   },
   {
     name: "User",
+    role: "admin",
     icon: <User size={20} />,
     href: "/dashboard/user",
-    children: [
-      { name: "manage-user", href: "/dashboard/user/manage-user" },
-    ],
+    children: [{ name: "manage-user", href: "/dashboard/admin/manage-user" }],
   },
 
   { name: "Calendar", icon: <Calendar size={20} />, href: "/calendar" },
@@ -55,21 +61,26 @@ const menuItems: MenuItem[] = [
   {
     name: "Recent Bookings",
     icon: <BookIcon size={20} />,
-    href: "/dashboard/recent-bookings",
+    role: "admin",
+    href: "/dashboard/admin/recent-bookings",
+  },
+
+  {
+    name: "Profile",
+    role: "user",
+    icon: <User size={20} />,
+    href: "/dashboard/user/profile",
   },
   {
     name: "Bookings",
     icon: <BookIcon size={20} />,
-    href: "/dashboard/bookings",
+    role: "user",
+    href: "/dashboard/user/bookings",
   },
-
-  { name: "Profile", icon: <User size={20} />, href: "/dashboard/profile" },
 
   { name: "Tables", icon: <Table size={20} />, href: "/tables" },
   { name: "Settings", icon: <Settings size={20} />, href: "/settings" },
 ];
-
-
 
 const otherItems: MenuItem[] = [
   { name: "Chart", icon: <PieChart size={20} />, href: "/chart" },
@@ -107,8 +118,13 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
   const toggleItem = (name: string) => {
     setOpenItems((prev) => ({ ...prev, [name]: !prev[name] }));
   };
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const sidebar = useRef<any>(null);
+  const user = useAppSelector(selectCurrentUser);
+  const roleBaseRoutes = user?.role
+    ? menuItems.filter((item) => item.role === user.role || item.role ==='public')
+    : [];
 
   const renderMenuItem = (item: MenuItem) => (
     <li key={item.name} className="mb-1">
@@ -120,7 +136,13 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
       >
         <span className="flex items-center">
           {item.icon}
-          {item.children ? <span className="ml-3 ">{item.name}</span> : <Link className="ml-3" to={item.href}>{item.name}</Link>}
+          {item.children ? (
+            <span className="ml-3 ">{item.name}</span>
+          ) : (
+            <Link className="ml-3" to={item.href}>
+              {item.name}
+            </Link>
+          )}
         </span>
         {item.children && (
           <ChevronDown
@@ -171,7 +193,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
           <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
             MENU
           </h2>
-          <ul className="space-y-1">{menuItems.map(renderMenuItem)}</ul>
+          <ul className="space-y-1">{roleBaseRoutes?.map(renderMenuItem)}</ul>
         </div>
         <div>
           <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">

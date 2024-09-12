@@ -52,7 +52,7 @@ export default function TakingServiceForm({
       bookingDate: formData.bookingDate,
       serviceName,
     };
-    console.log(data);
+
     dispatch(selectService(data));
     navigate("/booking");
   };
@@ -95,8 +95,8 @@ export default function TakingServiceForm({
               inputType="text"
               name="registrationPlate"
               id="registrationPlate"
-              placeholder="enter your registration Plate"
-              label="registrationPlate"
+              placeholder="enter your registration Plate : Example (ABCD1235)"
+              label="registrationPlate "
             />
           </>
         )}

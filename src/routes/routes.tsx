@@ -1,23 +1,22 @@
-import DefaultLayout from "@/layout/DefaultLayout";
-
+import React from "react";
 import { createBrowserRouter, Outlet } from "react-router-dom";
-import App from "./../../App";
 import RootLayout from "@/layout/RootLayout";
-import LoginPage from "@/pages/auth/LoginPage";
-import RegistrationPage from "@/pages/auth/RegistrationPage";
 import ServicePage from "@/pages/services/ServicePage";
-
+import App from "./../../App";
 import ServiceDetailsPage from "@/pages/services/ServiceDetailsPage";
 import BookingPage from "@/pages/booking/BookingPage";
 import PaymentSuccessWaitingPage from "@/pages/PaymentSuccessPage";
-
+import LoginPage from "@/pages/auth/LoginPage";
+import RegistrationPage from "@/pages/auth/RegistrationPage";
+import DefaultLayout from "@/layout/DefaultLayout";
 import { ServiceManagement } from "@/components/dashboard/services/ServiceManagement";
-
-import { BookingsOverview } from "@/components/dashboard/bookings/BookingsOverview";
-import UserManagement from "@/pages/dashboard/users/UserManagement";
 import SlotManagement from "@/components/dashboard/slot/SlotManagement";
+import UserManagement from "@/pages/dashboard/users/UserManagement";
+import { BookingsOverview } from "@/components/dashboard/bookings/BookingsOverview";
 import UserBookings from "@/components/dashboard/user/UserBooking";
 import Profile from "@/components/dashboard/user/Profile";
+import ProtectedRoute from "./ProtectedRoute";
+import CustomerFeedbackPage from "@/pages/feedback/CustomerFeedbackPage";
 
 const router = createBrowserRouter([
   {
@@ -29,7 +28,7 @@ const router = createBrowserRouter([
         element: <App />,
       },
       {
-        path: "/services",
+        path: "services",
         element: <Outlet />,
         children: [
           {
@@ -50,54 +49,76 @@ const router = createBrowserRouter([
         path: "payment/success",
         element: <PaymentSuccessWaitingPage />,
       },
+      {
+        path: "feedback",
+        element: <CustomerFeedbackPage />,
+      },
     ],
   },
   {
     path: "/auth",
+    element: <Outlet />,
     children: [
       {
         path: "login",
-
         element: <LoginPage />,
       },
       {
         path: "register",
-
         element: <RegistrationPage />,
       },
     ],
   },
-
   {
     path: "/dashboard",
     element: <DefaultLayout />,
+
     children: [
       {
-        path: "services/manage-services",
-        element: <ServiceManagement />,
+        path: "admin",
+        element: (
+          <ProtectedRoute role="admin">
+            <Outlet />
+          </ProtectedRoute>
+        ),
+        children: [
+          {
+            path: "services/manage-services",
+            element: <ServiceManagement />,
+          },
+          {
+            path: "services/manage-slots",
+            element: <SlotManagement />,
+          },
+          {
+            path: "manage-user",
+            element: <UserManagement />,
+          },
+          {
+            path: "recent-bookings",
+            element: <BookingsOverview />,
+          },
+          
+        ],
       },
       {
-        path: "services/manage-slots",
-        element: <SlotManagement />,
+        path: "user",
+        element: (
+          <ProtectedRoute role="user">
+            <Outlet />
+          </ProtectedRoute>
+        ),
+        children: [
+          {
+            path: "bookings",
+            element: <UserBookings />,
+          },
+          {
+            path: "profile",
+            element: <Profile />,
+          },
+        ],
       },
-      {
-        path: "user/manage-user",
-        element: <UserManagement />,
-      },
-      {
-        path: "recent-bookings",
-        element: <BookingsOverview />,
-      },
-      {
-        path: "bookings",
-        element: <UserBookings />,
-      },
-      {
-        path: "profile",
-        element: <Profile />,
-      },
-
-      
     ],
   },
 ]);

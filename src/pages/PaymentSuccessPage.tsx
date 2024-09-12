@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { Loader2, CheckCircle, ArrowRight } from "lucide-react";
 import {
@@ -12,38 +12,47 @@ import { Button } from "@/components/ui/button";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useProcessPaymentAndBookingMutation } from "@/redux/api/paymentApi";
 import { catchError } from "@/utils/catchError";
+import toast from "react-hot-toast";
 
 export default function PaymentSuccessWaitingPage() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
+  const bookingRef = useRef<boolean>(false);
 
-  const [confirmAppoinment, { isLoading, status }] =
+  const [confirmAppoinment, { isLoading }] =
     useProcessPaymentAndBookingMutation();
-
-  useEffect(() => {
-    let isMounted = true;
     const sessionId = params.get("session_id") as string;
+    useEffect(() => {
+      
+    
+      const processPaymentAndBooking = async (sessionId: string) => {
+        console.log(1);
+        try {
+          await confirmAppoinment({
+            session_id: sessionId,
+          }).unwrap();
+          toast.success("Booking successfully", { position: "bottom-right" });
+        } catch (error) {
+          catchError(error as Error);
+        }
+      };
 
-    const processPaymentAndBooking = async (sessionId: string) => {
-      isMounted = false;
-      try {
-        await confirmAppoinment({
-          session_id: sessionId,
-        }).unwrap();
-      } catch (error) {
-        catchError(error as Error);
+    
+      if (!bookingRef.current && sessionId) {
+        bookingRef.current = true;  // Set it to true to prevent further calls
+        processPaymentAndBooking(sessionId);
+   
+ 
       }
-    };
-    console.log(sessionId);
-    if (sessionId && isMounted) {
-      processPaymentAndBooking(sessionId);
-    }
+    
+      return () => {
+        if(bookingRef.current){
+          bookingRef.current = false;
+        }
+      };
+    }, []);
+    
 
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-  console.log(status);
   return (
     <div className="container mx-auto md:p-4 px-1 min-h-screen flex items-center justify-center bg-gray-50">
       <Card className="w-full max-w-[800px] py-5">
@@ -94,7 +103,7 @@ export default function PaymentSuccessWaitingPage() {
           {!isLoading ? (
             <Button
               onClick={() => navigate("/dashboard")}
-              className="bg-blue-600 hover:bg-blue-700 text-white"
+              className="bg-blue-600 hover:bg-sky-500 text-white"
             >
               Go to Dashboard <ArrowRight className="ml-2 h-4 w-4" />
             </Button>

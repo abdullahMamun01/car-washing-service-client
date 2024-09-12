@@ -32,7 +32,7 @@ export default function WashPackage() {
             className="col-span-2 border-gray-3 flex flex-col items-center justify-center py-4 px-4 shadow-lg "
           >
             <div className=""> {vh.icon}</div>
-            <h6 className="text-xl mt-4 text-blue-500">{vh.name}</h6>
+            <h6 className="text-xl mt-4 text-sky-500">{vh.name}</h6>
           </div>
         ))}
       </div> */}

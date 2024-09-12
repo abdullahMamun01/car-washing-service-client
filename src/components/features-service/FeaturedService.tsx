@@ -49,12 +49,12 @@ const featuredServices = [
 
 const FeaturedService = () => {
   return (
-    <section className="pb-12 pt-0 dark:bg-dark lg:pb-[90px] lg:px-20 ">
+    <section className="py-12 dark:bg-dark lg:pb-[90px] lg:px-20 ">
       <div className="container mx-auto">
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
             <div className="mx-auto mb-12 max-w-[510px] text-center lg:mb-20">
-              <span className="mb-2 block text-lg font-semibold text-blue-500">
+              <span className="mb-2 block text-lg font-semibold text-sky-500">
                 Our Services
               </span>
               <h2 className="mb-3 text-3xl font-bold leading-[1.2] text-primary dark:text-white sm:text-4xl md:text-[40px]">

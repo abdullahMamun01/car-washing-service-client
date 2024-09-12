@@ -1,7 +1,13 @@
 import Logo from "@/assets/icons/car-wash-svgrepo-com.svg";
+import ProfileAvatar from "@/components/dashboard/user/ProfileAvatar";
+import { Button } from "@/components/ui/button";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { useAppSelector } from "@/redux/hooks";
+import { LayoutDashboard, LogIn, LogOut, Menu } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function Navbar() {
+  const user = useAppSelector(selectCurrentUser);
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900 sticky top-0 z-[100] ">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -14,17 +20,29 @@ export default function Navbar() {
             className="h-10 w-10 object-contain"
             alt="Flowbite Logo"
           />
-          <span className="self-center text-2xl text-[#8b22e2] font-semibold whitespace-nowrap dark:text-white uppercase">
-            CARE washs spa
+          <span className="self-center text-2xl text-sky-600 font-semibold whitespace-nowrap dark:text-white uppercase">
+            CareSpa
           </span>
         </a>
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          <button
-            type="button"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Get started
-          </button>
+          {user?.role === "admin" && (
+            <Link to="/dashboard/admin/services/manage-services">
+              <Button className="hidden md:flex items-center space-x-2 bg-blue-600 hover:bg-sky-500 text-white mr-2">
+                <LayoutDashboard className="h-4 w-4" />
+                <span>Dashboard</span>
+              </Button>
+            </Link>
+          )}
+
+          {user && <ProfileAvatar />}
+          {!user && (
+            <Link to='/auth/login'>
+            <Button className="flex gap-3 text-white font-bold bg bg-sky-600">
+             Login <LogIn />
+            </Button>
+            </Link>
+          )}
+
           <button
             data-collapse-toggle="navbar-cta"
             type="button"
@@ -33,21 +51,7 @@ export default function Navbar() {
             aria-expanded="false"
           >
             <span className="sr-only">Open main menu</span>
-            <svg
-              className="w-5 h-5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 17 14"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M1 1h15M1 7h15M1 13h15"
-              />
-            </svg>
+            <Menu />
           </button>
         </div>
         <div
@@ -58,7 +62,7 @@ export default function Navbar() {
             <li>
               <Link
                 to="/"
-                className="block py-2 px-3 md:p-0 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:dark:text-blue-500"
+                className="block py-2 px-3 md:p-0 text-white bg-sky-500 rounded md:bg-transparent md:text-blue-700 md:dark:text-sky-500"
                 aria-current="page"
               >
                 Home
@@ -67,7 +71,7 @@ export default function Navbar() {
             <li>
               <Link
                 to="/services"
-                className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-sky-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
               >
                 Services
               </Link>
@@ -75,16 +79,15 @@ export default function Navbar() {
             <li>
               <a
                 href="#"
-                className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-sky-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
               >
-                
                 About
               </a>
             </li>
             <li>
               <a
                 href="#"
-                className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-sky-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
               >
                 Contact
               </a>

@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import { Info } from "lucide-react";
+import { BadgeCheck, Info } from "lucide-react";
 
 import carWahsData from "@/constants/data";
 
@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import { useGetSingleServiceQuery } from "@/redux/api/serviceApi";
 import NotFound from "@/components/error/NotFound";
 import ServicePageSkeleton from "@/common/skeleton/ServicePageSkeleton";
+import comparisonServiceData from "@/constants/comparison";
 
 // Mock data
 const serviceDetails = {
@@ -25,13 +26,15 @@ const serviceDetails = {
 
 export default function SingleService() {
   const vehicle = carWahsData;
-  const {serviceId} = useParams()
-  const {data,isLoading,isError} = useGetSingleServiceQuery(serviceId as string)
-  if(isLoading){
-    return <ServicePageSkeleton/>
+  const { serviceId } = useParams();
+  const { data, isLoading, isError } = useGetSingleServiceQuery(
+    serviceId as string
+  );
+  if (isLoading) {
+    return <ServicePageSkeleton />;
   }
-  if(isError){
-    return <NotFound/>
+  if (isError) {
+    return <NotFound />;
   }
 
   return (
@@ -46,23 +49,27 @@ export default function SingleService() {
           {/* header */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
           <div className="absolute bottom-4 left-4 text-white">
-            <h1 className="text-2xl md:text-3xl font-bold">
-              {data?.name}
-            </h1>
+            <h1 className="text-2xl md:text-3xl font-bold">{data?.name}</h1>
             <p className="text-sm md:text-base mt-2 max-w-md line-clamp-3 text-gray-3">
               {data?.description}
             </p>
           </div>
         </div>
 
-        <ServiceHeader price={data?.price as number} duration={data?.duration as number}/>
+        <ServiceHeader
+          price={data?.price as number}
+          duration={data?.duration as number}
+        />
         <CardContent className="p-6">
-          <ServiceForm price={data?.price as number} serviceName={data?.name as string}/>
+          <ServiceForm
+            price={data?.price as number}
+            serviceName={data?.name as string}
+          />
         </CardContent>
       </Card>
-      
+
       <Card className="w-full mx-auto mt-6 shadow-lg">
-        <CardHeader className="bg-blue-600 text-white">
+        <CardHeader className="bg-sky-600 text-white">
           <CardTitle className="flex items-center">
             <Info className="w-5 h-5 mr-2" />
             Additional Information
@@ -77,11 +84,10 @@ export default function SingleService() {
             your car spotless and refreshed.
           </p>
           <ul className="list-disc list-inside mt-4 text-gray-700">
-            <li>Exterior wash with hand-dried finish</li>
-            <li>Tire and rim cleaning</li>
-            <li>Interior vacuuming and dusting</li>
-            <li>Dashboard and console cleaning</li>
-            <li>Window cleaning (inside and out)</li>
+            {data && comparisonServiceData[data?.category].map((feature,i) => (
+              feature.included && <li key={i} className="flex gap-2 mb-2"> <BadgeCheck  className="text-green-500 mr-2"/> { feature.name}</li>
+            ))}
+      
           </ul>
         </CardContent>
       </Card>

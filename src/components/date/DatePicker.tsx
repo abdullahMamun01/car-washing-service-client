@@ -42,7 +42,7 @@ export function DatePicker() {
         onSelect={handleSelectDate}
         classNames={{
           day_selected:
-            "bg-blue-600 text-white hover:bg-blue-700 focus:bg-blue-700",
+            "bg-blue-600 text-white hover:bg-sky-500 focus:bg-sky-500",
           day_today: "bg-blue-100 text-blue-600 font-bold",
         }}
         initialFocus

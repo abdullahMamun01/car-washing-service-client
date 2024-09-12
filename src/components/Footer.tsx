@@ -1,14 +1,16 @@
 import React from 'react'
-
+import { Car } from 'lucide-react'
 export default function Footer() {
     return (
-        <section className="relative pt-24 pb-28 bg-white overflow-hidden">
+        <section className="relative pt-24 pb-28 bg-sky-600 text-white overflow-hidden">
             <img className="absolute right-0 top-0" src="flaro-assets/images/footers/gradient2.svg" alt="" />
             <div className="relative z-10 container px-4 mx-auto">
                 <div className="flex flex-wrap justify-between -m-8">
                     <div className="w-full sm:w-1/2 lg:w-2/12 p-8">
                         <a className="inline-block" href="#">
-                            <img src="flaro-assets/logos/flaro-logo-black-xl.svg" alt="" />
+                            {/* <img src={Logo} alt="" /> */}
+                            <Car className='w-35 h-35' />
+                            <h1 className='text-slate-800'>CarSpa Service</h1>
                         </a>
                     </div>
                     <div className="w-full sm:w-1/2 lg:w-2/12 p-8">
