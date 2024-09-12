@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "./ui/button";
-import {  DropletIcon } from "lucide-react";
+import { DropletIcon } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const HeroImage =
   "http://aqualine.like-themes.com/wp-content/uploads/2018/02/washer.png";
@@ -28,20 +29,24 @@ export default function HeroSection() {
             </p>
           </div>
           <div className="flex space-x-4">
-            <Button className="bg-sky-600 text-white hover:bg-sky-700 px-6 py-3">
-              <DropletIcon className="w-4 h-4 mr-1" /> Book a Wash
-            </Button>
-            <Button
-              variant="outline"
-              className="text-sky-600 border-sky-600 hover:bg-sky-50 px-6 py-3"
-            >
-              Our Services
-            </Button>
+            <Link to="/services">
+              <Button className="bg-sky-600 text-white hover:bg-sky-700 px-6 py-3">
+                <DropletIcon className="w-4 h-4 mr-1" /> Book a Wash
+              </Button>
+            </Link>
+            <Link to="/services">
+              <Button
+                variant="outline"
+                className="text-sky-600 border-sky-600 hover:bg-sky-50 px-6 py-3"
+              >
+                Our Services
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
       <div className="relative max-md:hidden col-span-6  flex items-center justify-center ">
-      <div className="absolute inset-0 ml-45 bg-sky-200 transform rotate-2 rounded-2xl h-5/6 my-auto"></div>
+        <div className="absolute inset-0 ml-45 bg-sky-200 transform rotate-2 rounded-2xl h-5/6 my-auto"></div>
         <img
           className=" max-w-[1200px] ml-90 max-h-full relative "
           src={HeroImage}
