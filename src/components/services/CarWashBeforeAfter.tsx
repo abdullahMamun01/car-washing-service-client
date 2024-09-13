@@ -54,7 +54,7 @@ export default function CarWashBeforeAfter() {
           >
             <div className="absolute inset-0">
               <img
-                src="http://aqualine.like-themes.com/wp-content/uploads/2018/02/After_01.jpg"
+                src="https://res.cloudinary.com/db5a7lbio/image/upload/v1726221383/car-washing/assets/car-wash-before_xrdb3r.jpg"
                 alt="Clean car after wash"
                 className="w-full h-full object-cover"
               />
@@ -64,7 +64,7 @@ export default function CarWashBeforeAfter() {
               style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
             >
               <img
-                src="http://aqualine.like-themes.com/wp-content/uploads/2018/02/Before_01.jpg"
+                src="https://res.cloudinary.com/db5a7lbio/image/upload/v1726221467/car-washing/assets/Before_01_qnxx6z.jpg"
                 alt="Dirty car before wash"
                 className="w-full h-full object-cover"
               />

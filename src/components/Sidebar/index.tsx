@@ -123,7 +123,9 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
   const sidebar = useRef<any>(null);
   const user = useAppSelector(selectCurrentUser);
   const roleBaseRoutes = user?.role
-    ? menuItems.filter((item) => item.role === user.role || item.role ==='public')
+    ? menuItems.filter(
+        (item) => item.role === user.role || item.role === "public"
+      )
     : [];
 
   const renderMenuItem = (item: MenuItem) => (
@@ -177,17 +179,27 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
         sidebarOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
-      <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-        <button
-          ref={trigger}
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          aria-controls="sidebar"
-          aria-expanded={sidebarOpen}
-          className="block lg:hidden"
-        >
-          <ArrowLeft className="text-white" />
-        </button>
+      <div className="flex">
+        <div className="flex items-center justify-between gap-2 pl-6 pr-3 py-5.5 lg:py-6.5">
+          <button
+            ref={trigger}
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            aria-controls="sidebar"
+            aria-expanded={sidebarOpen}
+            className="block lg:hidden"
+          >
+            <ArrowLeft className="text-white" />
+          </button>
+        </div>
+        <div className="pr-4">
+          <Link to="/">
+            <h1 className="text-white font-bold text-xl mt-5">
+              CarSpa Dashboard
+            </h1>
+          </Link>
+        </div>
       </div>
+
       <nav className="w-64 bg-gray-800 text-gray-100 min-h-screen p-4 text-white">
         <div className="mb-6">
           <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">

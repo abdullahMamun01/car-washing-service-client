@@ -17,10 +17,12 @@ import UserBookings from "@/components/dashboard/user/UserBooking";
 import Profile from "@/components/dashboard/user/Profile";
 import ProtectedRoute from "./ProtectedRoute";
 import CustomerFeedbackPage from "@/pages/feedback/CustomerFeedbackPage";
+import ErrorPage from "@/components/error/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    errorElement: <ErrorPage /> ,
     element: <RootLayout />,
     children: [
       {
@@ -83,6 +85,7 @@ const router = createBrowserRouter([
         ),
         children: [
           {
+            index: true,
             path: "services/manage-services",
             element: <ServiceManagement />,
           },
@@ -98,7 +101,6 @@ const router = createBrowserRouter([
             path: "recent-bookings",
             element: <BookingsOverview />,
           },
-          
         ],
       },
       {
@@ -110,6 +112,7 @@ const router = createBrowserRouter([
         ),
         children: [
           {
+            index: true,
             path: "bookings",
             element: <UserBookings />,
           },
@@ -121,6 +124,10 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path:"*" ,
+    element: <ErrorPage/>
+  }
 ]);
 
 export default router;
