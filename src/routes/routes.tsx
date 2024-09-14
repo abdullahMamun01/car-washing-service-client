@@ -19,6 +19,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import CustomerFeedbackPage from "@/pages/feedback/CustomerFeedbackPage";
 import ErrorPage from "@/components/error/ErrorPage";
 import PaymentList from "@/components/dashboard/payments/PaymentList";
+import AboutPage from "@/pages/about/About";
 
 const router = createBrowserRouter([
   {
@@ -42,11 +43,16 @@ const router = createBrowserRouter([
             path: ":serviceId",
             element: <ServiceDetailsPage />,
           },
+         
         ],
       },
       {
         path: "booking",
         element: <BookingPage />,
+      },
+      {
+        path: "about",
+        element: <AboutPage />,
       },
       {
         path: "payment/success",
