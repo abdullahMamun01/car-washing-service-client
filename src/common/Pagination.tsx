@@ -1,14 +1,14 @@
 // Pagination.tsx
 import { Button } from "@/components/ui/button";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 interface PaginationProps {
   limit?: number;
 }
 
-const Pagination: React.FC<PaginationProps> = ({ limit }) => {
+const Pagination: React.FC<PaginationProps> = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const navigate = useNavigate();
   const location = useLocation();
@@ -25,11 +25,7 @@ const Pagination: React.FC<PaginationProps> = ({ limit }) => {
     navigate(`?${searchParams.toString()}`);
   };
 
-  //   useEffect(() => {
-  //     const searchParams = new URLSearchParams(location.search);
-  //     searchParams.set("limit", limit.toString());
-  //     navigate(`?${searchParams.toString()}`);
-  //   },[])
+
 
   return (
     <div className="mt-4 flex items-center justify-center">

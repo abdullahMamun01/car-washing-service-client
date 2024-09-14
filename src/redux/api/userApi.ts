@@ -1,10 +1,10 @@
 import { baseApi } from "@/redux/api/baseApi";
-import {  TUser, TUserResponse } from "../types/user.type";
+import { TFeedback, TFeedbackResponse, TUser, TUserResponse } from "../types/user.type";
 import { TResponse } from "../types";
 
 const userAPi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getUser: build.query<TUser , undefined>({
+    getUser: build.query<TUser, undefined>({
       query: () => {
         return {
           url: `/me`,
@@ -40,12 +40,39 @@ const userAPi = baseApi.injectEndpoints({
         return {
           url: `/me/update-profile`,
           method: "PUT",
-          body:payload
+          body: payload,
         };
       },
       invalidatesTags: ["User"],
     }),
+    getAllFeedback : build.query<TFeedback[] , void>({
+      query: () => {
+        return {
+          url: `/users/feedback`,
+          method: "GET",
+
+        }
+      },
+      transformResponse: (response: TFeedbackResponse) => response.data
+    }) ,
+    userFeedback: build.mutation<void, TFeedback>({
+      query: (payload) => {
+        return {
+          url: `/users/feedback`,
+          method: "POST",
+          body: payload,
+        };
+      },
+      // invalidatesTags: ["User"],
+    }),
   }),
 });
 
-export const { useUserListQuery, useUpdateRoleMutation ,useUpdateProfileMutation,useGetUserQuery} = userAPi;
+export const {
+  useUserListQuery,
+  useUpdateRoleMutation,
+  useUpdateProfileMutation,
+  useGetUserQuery,
+  useUserFeedbackMutation,
+  useGetAllFeedbackQuery
+} = userAPi;

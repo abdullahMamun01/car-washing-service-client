@@ -11,7 +11,7 @@ export default function HeroSection() {
   return (
     <section className="bg-gradient-to-b from-blue-50 to-white overflow-hidden grid md:grid-cols-12 min-h-screen ">
       <div className="px-4 mx-auto col-span-6 flex items-center justify-center">
-        <div className="mt-16 lg:mb-2 max-w-md">
+        <div className=" md:mt-16 lg:mb-2 max-w-md">
           <div className="max-w-2xl lg:max-w-md mb-6">
             <h2 className="mb-8 text-4xl md:text-5xl text-primary font-bold font-heading">
               <span className="block xl:inline">Your car deserves</span>{" "}

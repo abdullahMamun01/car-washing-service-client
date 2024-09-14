@@ -11,10 +11,12 @@ import {
   ChevronDown,
   ArrowLeft,
   BookIcon,
+  WalletCards,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "@/redux/hooks";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+
 
 type MenuItem = {
   name: string;
@@ -63,6 +65,12 @@ const menuItems: MenuItem[] = [
     icon: <BookIcon size={20} />,
     role: "admin",
     href: "/dashboard/admin/recent-bookings",
+  },
+  {
+    name: "Payment List",
+    icon: <WalletCards size={20} />,
+    role: "admin",
+    href: "/dashboard/admin/payment-list",
   },
 
   {

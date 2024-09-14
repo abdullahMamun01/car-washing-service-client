@@ -101,7 +101,7 @@ export default function CarWashBeforeAfter() {
                 </li>
               ))}
             </ul>
-            <Button className="mt-4">
+            <Button className="mt-4 bg-sky-500 hover:bg-sky-400">
               Learn More <ArrowRightIcon className="ml-2 h-4 w-4" />
             </Button>
           </div>

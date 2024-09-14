@@ -1,9 +1,10 @@
 import Logo from "@/assets/icons/car-wash-svgrepo-com.svg";
+import Logout from "@/components/auth/Logout";
 import ProfileAvatar from "@/components/dashboard/user/ProfileAvatar";
 import { Button } from "@/components/ui/button";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useAppSelector } from "@/redux/hooks";
-import { LayoutDashboard, LogIn, LogOut, Menu } from "lucide-react";
+import { CarFront, LayoutDashboard, LogIn, Menu } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function Navbar() {
@@ -11,36 +12,37 @@ export default function Navbar() {
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900 sticky top-0 z-[100] ">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a
-          href="https://flowbite.com/"
+        <Link
+          to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <img
-            src={Logo}
-            className="h-10 w-10 object-contain"
-            alt="Flowbite Logo"
-          />
+          <CarFront/>
           <span className="self-center text-2xl text-sky-600 font-semibold whitespace-nowrap dark:text-white uppercase">
             CareSpa
           </span>
-        </a>
+        </Link>
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
           {user?.role === "admin" && (
-            <Link to="/dashboard/admin/services/manage-services">
-              <Button className="hidden md:flex items-center space-x-2 bg-blue-600 hover:bg-sky-500 text-white mr-2">
-                <LayoutDashboard className="h-4 w-4" />
-                <span>Dashboard</span>
-              </Button>
-            </Link>
+            <>
+              <Link to="/dashboard/admin/services/manage-services">
+                <Button className="hidden md:flex items-center space-x-2 bg-blue-600 hover:bg-sky-500 text-white mr-2">
+                  <LayoutDashboard className="h-4 w-4" />
+                  <span>Dashboard</span>
+                </Button>
+              </Link>
+              <Logout />
+            </>
           )}
 
-          {user && <ProfileAvatar />}
-          {!user && (
-            <Link to='/auth/login'>
-            <Button className="flex gap-3 text-white font-bold bg bg-sky-600">
-             Login <LogIn />
-            </Button>
-            </Link>
+          {user?.role === 'user' && <ProfileAvatar />}
+          {!user  && (
+            <>
+              <Link to="/auth/login">
+                <Button className="flex gap-3 text-white font-bold bg bg-sky-600">
+                  Login <LogIn />
+                </Button>
+              </Link>
+            </>
           )}
 
           <button
