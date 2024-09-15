@@ -1,6 +1,4 @@
-
-
-import { useState } from "react"
+import { useState, ChangeEvent } from "react"
 import { CarIcon, ChevronDownIcon, ChevronUpIcon, SearchIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -15,8 +13,18 @@ import {
 import PaymentTable from "./PaymentTable"
 import Pagination from "@/common/Pagination"
 
+// Define the payment data structure
+interface Payment {
+  id: number
+  user: string
+  amount: number
+  date: string
+  service: string
+  status: string
+}
+
 // Mock data for demonstration
-const payments = [
+const payments: Payment[] = [
   { id: 1, user: "John Doe", amount: 25, date: "2023-04-01", service: "Basic Wash", status: "Completed" },
   { id: 2, user: "Jane Smith", amount: 40, date: "2023-04-02", service: "Deluxe Wash", status: "Pending" },
   { id: 3, user: "Bob Johnson", amount: 60, date: "2023-04-03", service: "Premium Wash", status: "Completed" },
@@ -26,20 +34,13 @@ const payments = [
 ]
 
 export default function PaymentList() {
-  const [sortColumn, setSortColumn] = useState("")
-  const [sortDirection, setSortDirection] = useState("asc")
-  const [searchTerm, setSearchTerm] = useState("")
-  const [currentPage, setCurrentPage] = useState(1)
-  const [itemsPerPage, setItemsPerPage] = useState(5)
+  const [sortColumn, setSortColumn] = useState<keyof Payment | "">("")
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc")
+  const [searchTerm, setSearchTerm] = useState<string>("")
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [itemsPerPage, setItemsPerPage] = useState<number>(5)
 
-  const handleSort = (column: string) => {
-    if (column === sortColumn) {
-      setSortDirection(sortDirection === "asc" ? "desc" : "asc")
-    } else {
-      setSortColumn(column)
-      setSortDirection("asc")
-    }
-  }
+
 
   const filteredPayments = payments.filter((payment) =>
     Object.values(payment).some(
@@ -50,8 +51,10 @@ export default function PaymentList() {
   )
 
   const sortedPayments = [...filteredPayments].sort((a, b) => {
-    if (a[sortColumn] < b[sortColumn]) return sortDirection === "asc" ? -1 : 1
-    if (a[sortColumn] > b[sortColumn]) return sortDirection === "asc" ? 1 : -1
+    if (sortColumn) {
+      if (a[sortColumn] < b[sortColumn]) return sortDirection === "asc" ? -1 : 1
+      if (a[sortColumn] > b[sortColumn]) return sortDirection === "asc" ? 1 : -1
+    }
     return 0
   })
 
@@ -59,7 +62,7 @@ export default function PaymentList() {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
 
 
-  const pageNumbers = []
+  const pageNumbers: number[] = []
   for (let i = 1; i <= Math.ceil(sortedPayments.length / itemsPerPage); i++) {
     pageNumbers.push(i)
   }
@@ -74,7 +77,7 @@ export default function PaymentList() {
             type="text"
             placeholder="Search payments..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
             className="pl-8"
           />
         </div>

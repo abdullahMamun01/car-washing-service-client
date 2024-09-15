@@ -4,8 +4,6 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
 } from "lucide-react";
-
-
 import {
   Table,
   TableBody,
@@ -14,8 +12,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+
+// Define the shape of a payment
+type Payment = {
+  id: number;
+  user: string;
+  amount: number;
+  date: string;
+  service: string;
+  status: "Completed" | "Pending" | "Refunded";
+};
+
 // Mock data for demonstration
-const payments = [
+const payments: Payment[] = [
   {
     id: 1,
     user: "John Doe",
@@ -58,14 +67,15 @@ const payments = [
   },
   // Add more mock data as needed
 ];
+
 export default function PaymentTable() {
-  const [sortColumn, setSortColumn] = useState("");
-  const [sortDirection, setSortDirection] = useState("asc");
+  const [sortColumn, setSortColumn] = useState<keyof Payment | "">("");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
 
-  const handleSort = (column: string) => {
+  const handleSort = (column: keyof Payment) => {
     if (column === sortColumn) {
       setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     } else {
@@ -83,8 +93,11 @@ export default function PaymentTable() {
   );
 
   const sortedPayments = [...filteredPayments].sort((a, b) => {
-    if (a[sortColumn] < b[sortColumn]) return sortDirection === "asc" ? -1 : 1;
-    if (a[sortColumn] > b[sortColumn]) return sortDirection === "asc" ? 1 : -1;
+    const aValue = a[sortColumn as keyof Payment];
+    const bValue = b[sortColumn as keyof Payment];
+    
+    if (aValue < bValue) return sortDirection === "asc" ? -1 : 1;
+    if (aValue > bValue) return sortDirection === "asc" ? 1 : -1;
     return 0;
   });
 
