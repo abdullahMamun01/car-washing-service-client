@@ -29,8 +29,8 @@ export default function ProfileAvatar() {
       {user?.role === "user" ? (
         <DropdownMenu>
           <DropdownMenuTrigger className="border-0">
-            <Avatar>
-              <AvatarImage src={imageUrlParser(data?.image as string)} alt="@shadcn" />
+            <Avatar className="border-2 border-slate-300" >
+              <AvatarImage  src={imageUrlParser(data?.image as string)} alt="@shadcn" />
               <AvatarFallback className="bg-blue-600 text-white">
                 {user?.name.slice(0, 1)}
               </AvatarFallback>
@@ -53,8 +53,8 @@ export default function ProfileAvatar() {
           </DropdownMenuContent>
         </DropdownMenu>
       ) : (
-        <Avatar>
-          <AvatarImage src={user?.image || ''} alt="@shadcn" />
+        <Avatar className="">
+          <AvatarImage  src={user?.image || ''} alt="@shadcn" />
           <AvatarFallback className="bg-blue-600 text-white">
             {user?.name.slice(0, 2)}
           </AvatarFallback>

@@ -1,4 +1,3 @@
-
 import Logout from "@/components/auth/Logout";
 import ProfileAvatar from "@/components/dashboard/user/ProfileAvatar";
 import { Button } from "@/components/ui/button";
@@ -13,7 +12,7 @@ export default function Navbar() {
   const user = useAppSelector(selectCurrentUser);
 
   const handleToggle = () => {
-    setIsOpen(prev => !prev);
+    setIsOpen((prev) => !prev);
   };
 
   return (
@@ -43,13 +42,11 @@ export default function Navbar() {
 
           {user?.role === "user" && <ProfileAvatar />}
           {!user && (
-            <>
-              <NavLink to="/auth/login">
-                <Button className="flex gap-3 text-white font-bold bg bg-sky-600">
-                  Login <LogIn />
-                </Button>
-              </NavLink>
-            </>
+            <NavLink to="/auth/login">
+              <Button className="flex gap-3 text-white font-bold bg bg-sky-600">
+                Login <LogIn />
+              </Button>
+            </NavLink>
           )}
 
           <button
@@ -64,7 +61,9 @@ export default function Navbar() {
           </button>
         </div>
         <div
-          className={`md:hidden ${isOpen ? 'block bg-slate-50' : 'hidden'} fixed top-16 left-0 w-full dark:bg-gray-800 border border-gray-100 dark:border-gray-700`}
+          className={`md:hidden ${
+            isOpen ? "block bg-slate-50" : "hidden"
+          } fixed top-16 left-0 w-full dark:bg-gray-800 border border-gray-100 dark:border-gray-700`}
           id="navbar-cta"
         >
           <ul className="flex flex-col p-4 font-medium border-t border-gray-100 dark:border-gray-700">
@@ -117,7 +116,20 @@ export default function Navbar() {
                 Contact
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                to="/contact"
+                className={({ isActive }) =>
+                  isActive
+                    ? "block py-2 font-bold px-3 md:p-0 text-white bg-sky-500 rounded md:bg-transparent md:text-sky-600 md:dark:text-sky-500"
+                    : "block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-sky-600 md:dark:hover:text-sky-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                }
+              >
+                Dashboard
+              </NavLink>
+            </li>
           </ul>
+          
         </div>
         <div
           className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"

@@ -14,7 +14,7 @@ export default function Logout({className}: LogoutButtonProps) {
     dispatch(logout());
   };
   return (
-    <Button onClick={handleLogout}className={`hidden md:flex items-center space-x-2 bg-sky-600 hover:bg-sky-500 text-white mr-2  ${className}`}>
+    <Button onClick={handleLogout}className={` md:flex items-center space-x-2 bg-sky-600 max-sm:bg-sky-700 max-sm:text-slate-100 hover:bg-sky-500 text-white mr-2  ${className}`}>
       <CircleArrowLeft className="mr-2 w-5 h-5 text-red-500" /> Logout
     </Button>
   );
