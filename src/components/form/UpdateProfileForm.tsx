@@ -17,24 +17,25 @@ import { catchError } from "@/utils/catchError";
 import { useGetUserQuery, useUpdateProfileMutation } from "@/redux/api/userApi";
 import toast from "react-hot-toast";
 import SubmitButton from "./SubmitButton";
-import { useAppSelector } from "@/redux/hooks";
-import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { selectCurrentUser, setUser, useToken } from "@/redux/features/auth/authSlice";
 import imageUrlParser from "@/lib/imageUrlParser";
 
 export default function UpdateProfileForm() {
-const {data} = useGetUserQuery(undefined)
-
+  const dispatch = useAppDispatch();
+  const { data } = useGetUserQuery(undefined);
 
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
   const user = useAppSelector(selectCurrentUser);
-  
+  const token = useAppSelector(useToken)
+
   const form = useForm<TUpdateProfile>({
     resolver: zodResolver(updateProfileSchema),
     defaultValues: {
-      name: user?.name,
+      name: data?.name || user?.name || "",
       address: user?.address,
       phone: user?.phone,
-    }
+    },
   });
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const {
@@ -69,10 +70,13 @@ const {data} = useGetUserQuery(undefined)
     });
 
     try {
-      await updateProfile(formData).unwrap();
+      const response = await updateProfile(formData).unwrap();
       toast.success("profile update successfully", {
         position: "bottom-right",
       });
+
+      console.log(response.name);
+      dispatch(setUser({token , user: {...user , name: response.name} }));
     } catch (error) {
       catchError(error as Error);
     }
@@ -84,7 +88,13 @@ const {data} = useGetUserQuery(undefined)
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex items-center space-x-4">
             <Avatar className="w-20 h-20">
-              <AvatarImage src={ imagePreview || (data?.image && imageUrlParser(data?.image )) || ""} />
+              <AvatarImage
+                src={
+                  imagePreview ||
+                  (data?.image && imageUrlParser(data?.image)) ||
+                  ""
+                }
+              />
               <AvatarFallback></AvatarFallback>
             </Avatar>
             <div>

@@ -43,6 +43,7 @@ const userAPi = baseApi.injectEndpoints({
           body: payload,
         };
       },
+      transformResponse: (response: TResponse<TUser>) => response.data ,
       invalidatesTags: ["User"],
     }),
     getAllFeedback : build.query<TFeedback[] , void>({
