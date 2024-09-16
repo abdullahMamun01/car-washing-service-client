@@ -13,7 +13,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function SearchAndFIlter() {
-  const [search, setSearch] = useState("");
+
   const [sortBy, setSortBy] = useState("name");
   const [priceSort, setPriceSort] = useState("all");
   const [durationFilter, setDurationFilter] = useState("all");

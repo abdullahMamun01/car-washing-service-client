@@ -13,7 +13,7 @@ export default function ServicePage() {
       <Breadcrumb3 />
 
       <div>
-        <h2 className="mb-8 text-4xl lg:text-5xl text-primary text-center font-bold font-heading">
+        <h2 className="mb-8 text-4xl lg:text-5xl text-sky-600 text-center font-bold font-heading">
           Our Serivice Available!
         </h2>
       </div>

@@ -17,7 +17,7 @@ const image = carWahsData.find(data => data.service === service.name)
 const imageUrl = image ? image.images[0] : `https://washly.preyantechnosys.com/wp-content/uploads/2023/01/service04-1024x635.jpg`
 const duration = formatTime(service?.duration)
   return (
-    <div className="max-w-sm bg-white  rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div className="max-w-sm bg-white text-sky-600  rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <a href="#">
         <img
           className="rounded-t-lg w-full h-[200px] object-cover"

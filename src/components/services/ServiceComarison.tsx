@@ -134,7 +134,7 @@ export default function ServiceComparison() {
       )}
 
       {selectedServices.length === 0 && (
-        <p className="text-center text-gray-500 mt-8">
+        <p className="text-sky-500 mt-8">
           Select car wash services to compare them side by side.
         </p>
       )}

@@ -65,7 +65,12 @@ type TFeatureProps = {
     title:string ,
     description: string
 }
-function FeatureCard({ icon, title, description }:TFeatureProps) {
+
+function FeatureCard ({ icon, title, description }:TFeatureProps) {
+  
+  
+
+
   return (
     <Card>
       <CardHeader className="flex flex-row items-center gap-4">
