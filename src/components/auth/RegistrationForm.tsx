@@ -145,7 +145,7 @@ export default function RegistrationForm() {
               className="inline-block text-[14px] ml-1 text-primary hover:text-blue-600"
               to="/auth/login"
             >
-              Sign Up 
+              Login 
             </Link>
           </span>
         </div>

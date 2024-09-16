@@ -41,7 +41,7 @@ const authApi = baseApi.injectEndpoints({
     register: build.mutation<TRegisterResponse, TRegisterBody>({
       query: (credentials) => {
         return {
-          url: "/auth/signup",
+          url: "/signup",
           method: "POST",
           body: credentials,
         };

@@ -72,7 +72,7 @@ export default function LoginForm() {
       <p className="text-center font-semibold">
         <span>Don’t have an account?</span>
         <Link
-          to="/auth/registration"
+          to="/auth/register"
           className="ml-1 text-orange-900 hover:text-gray-900"
         >
           Sign up
