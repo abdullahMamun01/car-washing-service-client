@@ -4,7 +4,9 @@ import {
   StripeCheckoutRequest,
   TStripeResponse,
   TSripeSessionPayload,
+  TPayment,
 } from "../types/payment.type";
+import { TResponse } from "../types";
 
 const paymentApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -32,8 +34,18 @@ const paymentApi = baseApi.injectEndpoints({
       },
       transformResponse: (response: any) => response.data,
     }),
+
+    paymentList: build.query<TPayment[], string>({
+      query: (params) => {
+        return {
+          url: `/payment${params}`,
+          method: "GET",
+        };
+      },
+      transformResponse: (response: TResponse<TPayment[]>) => response.data,
+    }),
   }),
 });
 
-export const { useStripePaymentMutation, useProcessPaymentAndBookingMutation } =
+export const { useStripePaymentMutation, useProcessPaymentAndBookingMutation ,usePaymentListQuery} =
   paymentApi;

@@ -1,9 +1,3 @@
-import { useState } from "react";
-import {
-  CarIcon,
-  ChevronDownIcon,
-  ChevronUpIcon,
-} from "lucide-react";
 import {
   Table,
   TableBody,
@@ -12,6 +6,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { usePaymentListQuery } from "@/redux/api/paymentApi";
+import { CarIcon, Loader } from "lucide-react";
+import { useLocation } from "react-router-dom";
 
 // Define the shape of a payment
 type Payment = {
@@ -69,136 +66,61 @@ const payments: Payment[] = [
 ];
 
 export default function PaymentTable() {
-  const [sortColumn, setSortColumn] = useState<keyof Payment | "">("");
-  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const location = useLocation();
+  const { data, isLoading, isFetching } = usePaymentListQuery(location.search);
 
-  const handleSort = (column: keyof Payment) => {
-    if (column === sortColumn) {
-      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
-    } else {
-      setSortColumn(column);
-      setSortDirection("asc");
-    }
-  };
-
-  const filteredPayments = payments.filter((payment) =>
-    Object.values(payment).some(
-      (value) =>
-        typeof value === "string" &&
-        value.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  );
-
-  const sortedPayments = [...filteredPayments].sort((a, b) => {
-    const aValue = a[sortColumn as keyof Payment];
-    const bValue = b[sortColumn as keyof Payment];
-    
-    if (aValue < bValue) return sortDirection === "asc" ? -1 : 1;
-    if (aValue > bValue) return sortDirection === "asc" ? 1 : -1;
-    return 0;
-  });
-
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = sortedPayments.slice(indexOfFirstItem, indexOfLastItem);
-
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(sortedPayments.length / itemsPerPage); i++) {
-    pageNumbers.push(i);
+  if (isLoading || isFetching) {
+    return (
+      <div className="min-h-screen text-sky-500">
+        <Loader />
+      </div>
+    );
   }
 
   return (
     <Table className="bg-white">
       <TableHeader>
         <TableRow>
-          <TableHead
-            onClick={() => handleSort("user")}
-            className="cursor-pointer hover:bg-gray-100"
-          >
+          <TableHead className="cursor-pointer hover:bg-gray-100">
             User{" "}
-            {sortColumn === "user" &&
-              (sortDirection === "asc" ? (
-                <ChevronUpIcon className="inline ml-1" />
-              ) : (
-                <ChevronDownIcon className="inline ml-1" />
-              ))}
           </TableHead>
-          <TableHead
-            onClick={() => handleSort("amount")}
-            className="cursor-pointer hover:bg-gray-100"
-          >
-            Amount{" "}
-            {sortColumn === "amount" &&
-              (sortDirection === "asc" ? (
-                <ChevronUpIcon className="inline ml-1" />
-              ) : (
-                <ChevronDownIcon className="inline ml-1" />
-              ))}
+          <TableHead className="cursor-pointer hover:bg-gray-100">
+            Amount
           </TableHead>
-          <TableHead
-            onClick={() => handleSort("date")}
-            className="cursor-pointer hover:bg-gray-100"
-          >
+          <TableHead className="cursor-pointer hover:bg-gray-100">
             Date{" "}
-            {sortColumn === "date" &&
-              (sortDirection === "asc" ? (
-                <ChevronUpIcon className="inline ml-1" />
-              ) : (
-                <ChevronDownIcon className="inline ml-1" />
-              ))}
           </TableHead>
-          <TableHead
-            onClick={() => handleSort("service")}
-            className="cursor-pointer hover:bg-gray-100"
-          >
+          <TableHead className="cursor-pointer hover:bg-gray-100">
             Service{" "}
-            {sortColumn === "service" &&
-              (sortDirection === "asc" ? (
-                <ChevronUpIcon className="inline ml-1" />
-              ) : (
-                <ChevronDownIcon className="inline ml-1" />
-              ))}
           </TableHead>
-          <TableHead
-            onClick={() => handleSort("status")}
-            className="cursor-pointer hover:bg-gray-100"
-          >
+          <TableHead className="cursor-pointer hover:bg-gray-100">
             Status{" "}
-            {sortColumn === "status" &&
-              (sortDirection === "asc" ? (
-                <ChevronUpIcon className="inline ml-1" />
-              ) : (
-                <ChevronDownIcon className="inline ml-1" />
-              ))}
           </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {currentItems.map((payment) => (
-          <TableRow key={payment.id} className="hover:bg-gray-50">
-            <TableCell className="font-medium">{payment.user}</TableCell>
-            <TableCell>${payment.amount.toFixed(2)}</TableCell>
-            <TableCell>{payment.date}</TableCell>
+        {data?.map((payment) => (
+          <TableRow key={payment._id} className="hover:bg-gray-50">
+            <TableCell className="font-medium">{payment.user.name}</TableCell>
+            <TableCell>${payment.service.price.toFixed(2)}</TableCell>
+            <TableCell>{new Date(payment.paymentDate).toDateString()}</TableCell>
             <TableCell>
               <div className="flex items-center">
                 <CarIcon className="mr-2 h-4 w-4 text-blue-500" />
-                {payment.service}
+                {payment.service.name}
               </div>
             </TableCell>
             <TableCell>
               <span
                 className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                  payment.status === "Completed"
+                  payment.paymentStatus === "completed"
                     ? "bg-green-100 text-green-800"
-                    : payment.status === "Pending"
+                    : payment.paymentStatus === "pending"
                     ? "bg-yellow-100 text-yellow-800"
                     : "bg-red-100 text-red-800"
                 }`}
               >
-                {payment.status}
+                {payment.paymentStatus}
               </span>
             </TableCell>
           </TableRow>
