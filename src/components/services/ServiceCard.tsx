@@ -26,12 +26,12 @@ const duration = formatTime(service?.duration)
         />
       </a>
       <div className="p-5">
-        <a href="#">
+        <a href="">
           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             {service.name}
           </h5>
         </a>
-        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 line-clamp-3">
+        <p className="mb-3 font-normal text-slate-500 dark:text-gray-400 line-clamp-3">
           {service.description} 
         </p>
         <div className="flex justify-between mt-4">
@@ -42,7 +42,7 @@ const duration = formatTime(service?.duration)
         </div>
         <div className="mt-3">
           <Link to={`/services/${service.id}`} className="">
-            <Button className="w-full inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-sky-500 dark:focus:ring-blue-800">
+            <Button className="w-full inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-sky-600 rounded-lg hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-sky-500 dark:focus:ring-blue-800">
               More Details <MoveRight className="ml-2" />
             </Button>
           </Link>

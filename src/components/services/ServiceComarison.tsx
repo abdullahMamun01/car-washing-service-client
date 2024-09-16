@@ -64,7 +64,7 @@ export default function ServiceComparison() {
 
   return (
     <div className="mx-auto py-4">
-      <h1 className="text-2xl font-bold mb-4">Car Wash Service Comparison</h1>
+      <h1 className="text-2xl text-sky-500 font-bold mb-4">Car Wash Service Comparison</h1>
 
       <div className="mb-4">
         <Select onValueChange={handleServiceSelect}>
@@ -105,7 +105,7 @@ export default function ServiceComparison() {
                   <p className="text-2xl font-bold">
                     ${service.price?.toFixed(2)}
                   </p>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm ">
                     Duration: {service.duration} minutes
                   </p>
                   <ul className="mt-4 space-y-2">
