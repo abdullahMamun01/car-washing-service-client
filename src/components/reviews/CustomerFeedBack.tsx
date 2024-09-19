@@ -44,9 +44,9 @@ export default function CustomerFeedBack() {
           </Link>
         </div>
         <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
-          {data?.slice(0, 2).map((feedback) => (
+          {data?.slice(0, 3).map((feedback) => (
             <FeedBack
-              key={feedback.user?._id}
+              key={feedback?._id}
               rating={feedback.ratings}
               comments={feedback.description}
               name={feedback?.user?.name as string}

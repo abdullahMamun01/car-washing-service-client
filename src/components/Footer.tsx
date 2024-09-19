@@ -2,7 +2,7 @@ import React from 'react'
 import { Car } from 'lucide-react'
 export default function Footer() {
     return (
-        <section className="relative pt-24 pb-28 bg-sky-600 text-white overflow-hidden">
+        <section className="relative pt-24 pb-28 bg-sky-600 text-white overflow-hidden px-30">
             <img className="absolute right-0 top-0" src="flaro-assets/images/footers/gradient2.svg" alt="" />
             <div className="relative z-10 container px-4 mx-auto">
                 <div className="flex flex-wrap justify-between -m-8">

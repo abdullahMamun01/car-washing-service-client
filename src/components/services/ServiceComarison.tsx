@@ -21,12 +21,12 @@ type TComparisonService = {
 };
 
 const featureIcons: { [key: string]: React.ReactNode } = {
-  "Exterior Wash": <Droplets className="h-5 w-5 mr-3"/>,
-  "Hand Dry": <Wind className="h-5 w-5 mr-3"/>,
-  "Wheel Cleaning": <Brush className="h-5 w-5 mr-3"/>,
-  "Undercarriage Wash": <Car className="h-5 w-5 mr-3"/>,
-  Wax: <Sparkles className="h-5 w-5 mr-3"/>,
-  "Interior Vacuum": <Wind className="h-5 w-5 mr-3"/>,
+  "Exterior Wash": <Droplets className="h-5 w-5 mr-3" />,
+  "Hand Dry": <Wind className="h-5 w-5 mr-3" />,
+  "Wheel Cleaning": <Brush className="h-5 w-5 mr-3" />,
+  "Undercarriage Wash": <Car className="h-5 w-5 mr-3" />,
+  Wax: <Sparkles className="h-5 w-5 mr-3" />,
+  "Interior Vacuum": <Wind className="h-5 w-5 mr-3" />,
   // Add other feature icons as needed
 };
 
@@ -64,7 +64,9 @@ export default function ServiceComparison() {
 
   return (
     <div className="mx-auto py-4">
-      <h1 className="text-2xl text-sky-500 font-bold mb-4">Car Wash Service Comparison</h1>
+      <h1 className="text-2xl text-sky-500 font-bold mb-4">
+        Car Wash Service Comparison
+      </h1>
 
       <div className="mb-4">
         <Select onValueChange={handleServiceSelect}>
