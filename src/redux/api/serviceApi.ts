@@ -36,6 +36,16 @@ const serviceApi = baseApi.injectEndpoints({
         response.data,
     }),
 
+    availableServiceSlotDate: build.query<string[], string>({
+      query: (serviceId) => {
+        return {
+          url: `/services/${serviceId}/available-dates`,
+          method: "GET",
+        };
+      },
+      providesTags: ["Slot"],
+      transformResponse: (response: TResponse<string[]>) => response.data,
+    }),
     addService: build.mutation<TCarWashServiceDataResponse, TCarWashService>({
       query: (payload) => {
         return {
@@ -78,4 +88,5 @@ export const {
   useGetSingleServiceQuery,
   useUpdateServiceMutation,
   useDeleteServiceMutation,
+  useAvailableServiceSlotDateQuery
 } = serviceApi;

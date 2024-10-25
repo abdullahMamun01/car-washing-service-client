@@ -17,6 +17,7 @@ export default function ServiceList() {
   const transFormServiceData = data?.map(
     ({ createdAt: _, updatedAt: __, _id, ...other }) => ({ id: _id, ...other })
   );
+  console.log({transFormServiceData})
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-12 gap-4 ">

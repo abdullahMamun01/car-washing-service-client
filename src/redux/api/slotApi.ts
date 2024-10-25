@@ -28,8 +28,9 @@ const slotApi = baseApi.injectEndpoints({
       },
       providesTags: ["Slot"],
       transformResponse: (response: TSlotResponse) => response.data,
-    }),
+    })
 
+    ,
     createSlot: build.mutation<void, TCreateSlot>({
       query: (payload) => {
         return {

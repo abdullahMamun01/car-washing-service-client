@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { TCarWashService } from "@/redux/types/service.type";
 import carWahsData from "@/constants/data";
 import { formatTime } from "@/utils/time";
+import { Badge } from "../ui/badge";
 
 
 
@@ -16,8 +17,11 @@ export default function ServiceCard({service} : TServiceProps) {
 const image = carWahsData.find(data => data.service === service.name)
 const imageUrl = image ? image.images[0] : `https://washly.preyantechnosys.com/wp-content/uploads/2023/01/service04-1024x635.jpg`
 const duration = formatTime(service?.duration)
+  const hasOpenSlot = service.hasOpenSlot
   return (
-    <div className="max-w-sm bg-white text-sky-600  rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div className="max-w-sm relative bg-white text-sky-600  rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <Badge className={`absolute top-2 right-2 ${hasOpenSlot ? 'bg-[#54C392]' : 'bg-[#EC8305]'}`}>{
+        hasOpenSlot ? 'Available' : 'unavilable'}</Badge>
       <a href="#">
         <img
           className="rounded-t-lg w-full h-[200px] object-cover"

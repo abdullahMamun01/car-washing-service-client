@@ -7,7 +7,8 @@ type TCarWashService = {
   price: number; // The price of the service (assumed to be in a currency unit)
   duration: number; // The duration of the service in minutes
   isDelted?: boolean;
-  category: TCategory
+  category: TCategory ,
+  hasOpenSlot: boolean
 };
 
 type ServiceRequest = {

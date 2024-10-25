@@ -26,7 +26,10 @@ const Breadcrumb3 = () => {
               const to = `/${pathnames.slice(0, index + 1).join("/")}`;
 
               return isLast ? (
-                <li key={index} className="text-base font-medium text-body-color dark:text-dark-6">
+                <li
+                  key={index}
+                  className="text-base font-medium text-body-color dark:text-dark-6"
+                >
                   {value.charAt(0).toUpperCase() + value.slice(1)}
                 </li>
               ) : (
@@ -37,7 +40,10 @@ const Breadcrumb3 = () => {
                   >
                     {value.charAt(0).toUpperCase() + value.slice(1)}
                   </Link>
-                  <span className="px-3 text-body-color dark:text-dark-6"> / </span>
+                  <span className="px-3 text-body-color dark:text-dark-6">
+                    {" "}
+                    /{" "}
+                  </span>
                 </li>
               );
             })}
