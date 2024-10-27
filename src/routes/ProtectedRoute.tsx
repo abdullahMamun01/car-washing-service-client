@@ -21,15 +21,17 @@ export default function ProtectedRoute({ children, role }: ProtectRouteProps) {
   const user = verifyToken(token);
   const currentTime = Math.floor(Date.now() / 1000);
 
+  if(token && role !== user.role ){
+
+    return <Navigate to="/dashboard/user/profile" replace={true} />;
+  }
+
   if (role !== user.role || user.exp < currentTime){
 
    return <Navigate to="/auth/login" replace={true} />;
   }
   
-  if(token && role !== user.role ){
-
-    return <Navigate to="/" replace={true} />;
-  }
+  
 
   return children;
 }
