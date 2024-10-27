@@ -1,21 +1,16 @@
 import React, { useRef, useState } from "react";
 import {
-  LayoutDashboard,
-  Calendar,
-  User,
-  Table,
-  Settings,
+
   PieChart,
   Layers,
   Key,
   ChevronDown,
   ArrowLeft,
-  BookIcon,
-  WalletCards,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "@/redux/hooks";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { menuItems } from "./SidbarItems";
 
 
 type MenuItem = {
@@ -26,69 +21,7 @@ type MenuItem = {
   children?: MenuItem[];
 };
 
-const menuItems: MenuItem[] = [
-  {
-    name: "Dashboard",
-    icon: <LayoutDashboard size={20} />,
-    href: "/dashboard",
-    role: "public",
-    children: [
-      { name: "Analytics", href: "/dashboard/analytics" },
-      { name: "Overview", href: "/dashboard/overview" },
-    ],
-  },
-  {
-    name: "services",
-    role: "admin",
-    icon: <LayoutDashboard size={20} />,
-    href: "/dashboard/services/manage-services",
-    children: [
-      {
-        name: "manage-service",
-        href: "/dashboard/admin/services/manage-services",
-      },
-      { name: "manage-slots", href: "/dashboard/admin/services/manage-slots" },
-    ],
-  },
-  {
-    name: "User",
-    role: "admin",
-    icon: <User size={20} />,
-    href: "/dashboard/user",
-    children: [{ name: "manage-user", href: "/dashboard/admin/manage-user" }],
-  },
 
-  { name: "Calendar", icon: <Calendar size={20} />, href: "/calendar" },
-
-  {
-    name: "Recent Bookings",
-    icon: <BookIcon size={20} />,
-    role: "admin",
-    href: "/dashboard/admin/recent-bookings",
-  },
-  {
-    name: "Payment List",
-    icon: <WalletCards size={20} />,
-    role: "admin",
-    href: "/dashboard/admin/payment-list",
-  },
-
-  {
-    name: "Profile",
-    role: "user",
-    icon: <User size={20} />,
-    href: "/dashboard/user/profile",
-  },
-  {
-    name: "Bookings",
-    icon: <BookIcon size={20} />,
-    role: "user",
-    href: "/dashboard/user/bookings",
-  },
-
-  { name: "Tables", icon: <Table size={20} />, href: "/tables" },
-  { name: "Settings", icon: <Settings size={20} />, href: "/settings" },
-];
 
 const otherItems: MenuItem[] = [
   { name: "Chart", icon: <PieChart size={20} />, href: "/chart" },

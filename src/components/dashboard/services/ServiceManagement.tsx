@@ -36,6 +36,7 @@ import { catchError } from "@/utils/catchError";
 import { useDeleteServiceMutation } from "@/redux/api/serviceApi";
 import toast from "react-hot-toast";
 import { Spinner } from "@/components/ui/spinner";
+import DashboadBreadcrumb from "@/components/Breadcrumbs/DashboadBreadcrumb";
 
 export function ServiceManagement() {
   const openModal = useAppSelector((state) =>
@@ -74,6 +75,7 @@ export function ServiceManagement() {
 
   return (
     <Card>
+      <DashboadBreadcrumb pageName="service"/>
       <CardHeader>
         <CardTitle>Service Management</CardTitle>
         <CardDescription>Manage available car wash services</CardDescription>

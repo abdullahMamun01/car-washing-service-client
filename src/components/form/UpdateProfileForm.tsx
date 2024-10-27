@@ -75,7 +75,6 @@ export default function UpdateProfileForm() {
         position: "bottom-right",
       });
 
-      console.log(response.name);
       dispatch(setUser({token , user: {...user , name: response.name} }));
     } catch (error) {
       catchError(error as Error);

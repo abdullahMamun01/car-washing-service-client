@@ -13,6 +13,7 @@ type ProtectRouteProps = {
 
 export default function ProtectedRoute({ children, role }: ProtectRouteProps) {
   const token = useAppSelector(useToken);
+
   const authUser = useAppSelector(selectCurrentUser)
   if (!token || !authUser) {
     return <Navigate to="/login" replace={true} />;
@@ -23,6 +24,11 @@ export default function ProtectedRoute({ children, role }: ProtectRouteProps) {
   if (role !== user.role || user.exp < currentTime){
 
    return <Navigate to="/auth/login" replace={true} />;
+  }
+  
+  if(token && role !== user.role ){
+
+    return <Navigate to="/" replace={true} />;
   }
 
   return children;

@@ -30,7 +30,7 @@ export default function Navbar() {
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
           {user?.role === "admin" && (
             <>
-              <NavLink to="/dashboard/admin/services/manage-services">
+              <NavLink to="/dashboard">
                 <Button className="hidden md:flex items-center space-x-2 bg-blue-600 hover:bg-sky-500 text-white mr-2">
                   <LayoutDashboard className="h-4 w-4" />
                   <span>Dashboard</span>

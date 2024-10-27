@@ -20,6 +20,7 @@ import CustomerFeedbackPage from "@/pages/feedback/CustomerFeedbackPage";
 import ErrorPage from "@/components/error/ErrorPage";
 import PaymentList from "@/components/dashboard/payments/PaymentList";
 import AboutPage from "@/pages/about/About";
+import OverviewDashboard from "@/pages/dashboard/OverviewDashboard";
 
 const router = createBrowserRouter([
   {
@@ -83,6 +84,13 @@ const router = createBrowserRouter([
     element: <DefaultLayout />,
 
     children: [
+      {
+        index : true ,
+        element : <ProtectedRoute role="admin">
+          <OverviewDashboard/>
+        </ProtectedRoute>
+      }
+      ,
       {
         path: "admin",
         element: (

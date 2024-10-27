@@ -67,43 +67,4 @@ export function BookingsOverview() {
     </Card>
   );
 }
-{
-  /* <h2 className="text-2xl font-semibold mb-4 text-gray-700">
-            User Bookings
-          </h2>
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-gray-100">
-                <TableHead className="font-bold">ID</TableHead>
-                <TableHead className="font-bold">User</TableHead>
-                <TableHead className="font-bold">Service</TableHead>
-                <TableHead className="font-bold">Date</TableHead>
-                <TableHead className="font-bold">Time</TableHead>
-                <TableHead className="font-bold">Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {bookings.map((booking) => (
-                <TableRow
-                  key={booking.id}
-                  className="hover:bg-gray-50 transition-colors"
-                >
-                  <TableCell>{booking.id}</TableCell>
-                  <TableCell>{booking.user}</TableCell>
-                  <TableCell>{booking.service}</TableCell>
-                  <TableCell>{booking.date}</TableCell>
-                  <TableCell>{booking.time}</TableCell>
-                  <TableCell>
-                    <Badge
-                      className={`${getStatusColor(
-                        booking.status
-                      )} px-2 py-1 rounded-full text-xs font-semibold`}
-                    >
-                      {booking.status}
-                    </Badge>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table> */
-}
+
