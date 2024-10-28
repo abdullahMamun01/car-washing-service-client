@@ -8,7 +8,7 @@ const Breadcrumb3 = () => {
   const pathnames = location.pathname.split("/").filter((x) => x);
 
   return (
-    <div className="mb-20">
+    <div className="mb-10">
       <div className="w-full mb-8">
         <div className="px-4 py-4 bg-white rounded-lg shadow-1 dark:shadow-card dark:bg-dark-2 dark:border-dark-3 sm:px-6 md:px-8 md:py-5">
           <ul className="flex items-center">

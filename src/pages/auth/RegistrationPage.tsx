@@ -1,9 +1,11 @@
 import RegistrationForm from "@/components/auth/RegistrationForm";
+import Breadcrumb3 from "@/components/Breadcrumbs/Breadcrumb";
 
 function RegistrationPage() {
   return (
     <section className="relative py-20 xl:py-10 overflow-hidden ">
       <div className="container px-4 mx-auto">
+        <Breadcrumb3/>
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-wrap -mx-4 items-center">
             <div className="w-full lg:w-1/2 px-4 mb-16 lg:mb-0">
